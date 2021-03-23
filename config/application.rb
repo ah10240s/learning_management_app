@@ -16,14 +16,16 @@ module LearningManagementApp
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-
+    #rspecの設定
     config.generators do |g|
-      fixtures: false,
-      view_specs: false,
-      helper_specs: false,
-      routing_specs: false
-      controller_specs: false
+      g.test_framework :rspec,
+        fixtures: false,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: false
     end
+
 
   end
 end
