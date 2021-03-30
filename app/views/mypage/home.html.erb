@@ -1,0 +1,7 @@
+    <% if user_signed_in? %>
+        ログイン済
+<%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    <% else %>
+        未ログイン
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    <% end %>
