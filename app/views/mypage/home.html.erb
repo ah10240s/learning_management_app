@@ -1,7 +1,12 @@
     <% if user_signed_in? %>
-        ログイン済
+        ログイン済<br>
 <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<br><br>
+<%= link_to "登録情報編集", edit_user_registration_path, method: :get %>
     <% else %>
-        未ログイン
+        未ログイン<br>
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
     <% end %>
+
+    <br><br>
+
