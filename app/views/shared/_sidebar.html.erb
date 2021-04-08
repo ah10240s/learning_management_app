@@ -1,0 +1,80 @@
+<!-- サイドバー -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- サイトロゴ -->
+    <%= link_to root_url, class:"brand-link" do %>
+        <span class="brand-text font-weight-light">勉強スケジュール管理</span>
+    <% end %>
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-user"></i>
+                        <p>マイページ</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-book"></i>
+                        <p>科目一覧</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-calendar"></i>
+                        <p>学習予定</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-trophy"></i>
+                        <p>学習実績</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>所属チーム一覧</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>登録情報
+                        <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <%= link_to  destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>確認</p>
+                            <% end %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to  edit_user_registration_path, method: :get, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>編集</p>
+                            <% end %>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <%= link_to  destroy_user_session_path, method: :delete, class: 'nav-link' do %>
+                        <i class="nav-icon fa fa-sign-out-alt"></i>
+                        <p>ログアウト</p>
+                    <% end %>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+<!-- /.sidebar -->
+</aside>

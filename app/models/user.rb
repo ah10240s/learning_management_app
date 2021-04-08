@@ -7,4 +7,13 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: :false },
     length: { minimum: 4, maximum: 20 },
     presence: true
+
+    #登録時＆ログイン時？にメールアドレスを不要とする
+    def email_required?
+      false
+    end
+  
+    def email_changed?
+      false
+    end
 end

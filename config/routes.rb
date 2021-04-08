@@ -9,10 +9,14 @@ Rails.application.routes.draw do
 
   root :to => 'mypage#home'
 
+  # resources :mypage
+
   devise_for :users, :controllers => {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+  # get  '/test',  to: 'mypage#show'
 
   # get  '/mypage/:id',  to: 'mypage#home', as: 'mypage'
   # get  '/users/:id',  to: 'mypage#home'
