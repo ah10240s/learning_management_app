@@ -1,5 +1,4 @@
-@import 'admin-lte/plugins/fontawesome-free/css/all.min';
-@import 'admin-lte/dist/css/adminlte.min';
+
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
@@ -16,4 +15,6 @@
  *= require_self
  */
 
+ @import 'admin-lte/plugins/fontawesome-free/css/all.min';
+ @import 'admin-lte/dist/css/adminlte.min';
 
