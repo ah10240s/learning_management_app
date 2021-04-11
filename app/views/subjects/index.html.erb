@@ -1,0 +1,10 @@
+<% if @user.subjects.any? %>
+    <h3>Microposts (<%= @user.subjects.count %>)</h3>
+    
+    <%= render @subjects %>
+    <br>
+    
+<% end %>
+
+
+

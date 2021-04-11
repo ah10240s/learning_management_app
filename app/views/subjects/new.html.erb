@@ -1,0 +1,28 @@
+<section class="content-header">
+<div class="container-fluid">
+<div class="row mb-2">
+    <div class="col-sm-6">
+    <h1>科目登録画面</h1>
+    </div>
+</div>
+</div>
+</section>
+<section class="content">
+
+<%= form_with(model: @subject, local: true) do |f| %>
+
+    <div class="card-body">
+        <div class="form-group col-sm-6">
+        <%= f.label :科目名 %><br />
+        <%= f.text_field :subject_name, autofocus: true, class:"form-control" %>
+    </div>
+
+    <%= f.hidden_field :user_id, :value => @user.id %>
+
+    <div class="card-footer">
+    <%= f.submit "登録する", class:"btn btn-primary" %>
+    </div>
+
+<% end %>
+</section>
+

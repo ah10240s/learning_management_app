@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
 
 
+  get 'subjects/new'
   # rootをログイン画面に設定
   # devise_scope :user do
   #   root "users/sessions#new"
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
   root :to => 'mypage#home'
 
   # resources :mypage
+  resources :subjects
 
   devise_for :users, :controllers => {
     sessions: 'users/sessions',
