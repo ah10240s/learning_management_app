@@ -14,7 +14,7 @@ require("jquery");
 // import 'bootstrap';
 import '../stylesheets/application';
 import "@fortawesome/fontawesome-free/js/all";
-
+import '/node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js';
 
 document.addEventListener("turbolinks:load", () => {
     $('[data-toggle="tooltip"]').tooltip()
