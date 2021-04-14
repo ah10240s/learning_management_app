@@ -1,10 +1,56 @@
-<% if @user.subjects.any? %>
-    <h3>Microposts (<%= @user.subjects.count %>)</h3>
-    
-    <%= render @subjects %>
-    <br>
-    
-<% end %>
+<p id="notice"><%= notice %></p>
 
-
-
+<%= javascript_pack_tag 'subjects/index' %>
+<!-- 上部 -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>科目一覧</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- テーブル -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="users_example" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width:25%;">科目ID</th>
+                                <th style="width:25%;">科目名</th>
+                                <th style="width:25%;">登録者ID</th>
+                                <th style="width:25%;">操作</th>
+                            </tr>
+                            </thead>
+                        
+                            <tbody>
+                            <% @subjects.each do |subject| %>
+                                <tr>
+                                <td><%= subject.id %></td>
+                                <td><%= subject.subject_name %></td>
+                                <td><%= subject.user_id %></td>
+                                <td><%= link_to '詳細', subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                </tr>
+                            <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

@@ -1,0 +1,18 @@
+<section class="content">
+
+    <%= form_with(model: @subject, local: true) do |f| %>
+
+        <div class="card-body">
+            <div class="form-group col-sm-6">
+            <%= f.label :科目名 %><br />
+            <%= f.text_field :subject_name, autofocus: true, class:"form-control", value: @subject.subject_name %>
+        </div>
+
+        <%= f.hidden_field :user_id, :value => @user.id %>
+
+        <div class="card-footer">
+        <%= f.submit "登録する", class:"btn btn-primary" %>
+        </div>
+
+    <% end %>
+</section>
