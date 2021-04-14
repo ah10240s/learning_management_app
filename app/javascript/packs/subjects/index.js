@@ -1,4 +1,4 @@
-import '/node_modules/admin-lte/plugins/datatables/jquery.dataTables.min.js';
+import './node_modules/admin-lte/plugins/datatables/jquery.dataTables';
 
 import '../../stylesheets/subjects/index.scss';
 
