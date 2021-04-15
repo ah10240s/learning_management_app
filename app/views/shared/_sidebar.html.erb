@@ -43,7 +43,22 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-calendar"></i>
                         <p>学習予定</p>
+                        <i class="fas fa-angle-left right"></i>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <%= link_to  studyplans_path, method: :get, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>学習予定一覧</p>
+                            <% end %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to  new_studyplan_path, method: :get, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>学習予定登録</p>
+                            <% end %>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

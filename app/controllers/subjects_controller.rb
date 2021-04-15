@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_current_user, only: [:new, :index, :edit, :update]
+  before_action :set_current_user, only: [:new, :index, :edit, :update, :show]
 
 
   # GET: /subjects

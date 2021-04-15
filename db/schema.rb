@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_11_053018) do
+ActiveRecord::Schema.define(version: 2021_04_15_092409) do
+
+  create_table "studyplans", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "subject_id", null: false
+    t.datetime "start_daytime", null: false
+    t.boolean "done_flag", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "end_daytime", null: false
+    t.index ["subject_id"], name: "index_studyplans_on_subject_id"
+    t.index ["user_id"], name: "index_studyplans_on_user_id"
+  end
 
   create_table "subjects", force: :cascade do |t|
     t.text "subject_name"
@@ -33,5 +45,7 @@ ActiveRecord::Schema.define(version: 2021_04_11_053018) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "studyplans", "subjects"
+  add_foreign_key "studyplans", "users"
   add_foreign_key "subjects", "users"
 end

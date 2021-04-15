@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # resources :mypage
   resources :subjects
+  resources :studyplans
 
   devise_for :users, :controllers => {
     sessions: 'users/sessions',

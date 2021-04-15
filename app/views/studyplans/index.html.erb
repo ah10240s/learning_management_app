@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<%= javascript_pack_tag 'subjects/index' %>
+<!-- 上部 -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>学習予定一覧</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- テーブル -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="users_example" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>学習予定ID</th>
+                                <th>科目名</th>
+                                <th>登録者ID</th>
+                                <th>開始時間</th>
+                                <th>終了時間</th>
+                                <th>完了ステータス</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        
+                            <tbody>
+                            <% @studyplans.each do |studyplan| %>
+                                <% subject = Subject.find(studyplan.subject_id) %>
+                                <tr>
+                                <td><%= studyplan.id %></td>
+                                <td><%= subject.subject_name %></td>
+                                <td><%= studyplan.user_id %></td>
+                                <td><%= studyplan.start_daytime %></td>
+                                <td><%= studyplan.end_daytime %></td>
+                                <td><%= studyplan.done_flag %></td>
+                                <td><%= link_to '詳細', studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '編集', edit_subject_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '削除', studyplan, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                </tr>
+                            <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
