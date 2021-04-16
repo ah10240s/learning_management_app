@@ -1,0 +1,56 @@
+<% provide(:title, "学習予定編集") %>
+<!-- Main content -->
+
+<section class="content-header">
+
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-8 offset-md-2">
+                <!-- general form elements -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">学習予定編集</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <%= form_with(model: @studyplan, local: true) do |f| %>
+
+                        <%= f.hidden_field :user_id, :value => @user.id %>
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <%= f.label :科目 %><br />
+                                <%= f.text_field :subject_name, class:"form-control", value: @subject.subject_name, disabled: true %>
+                            </div>
+
+                            <div class="form-group">
+                                <%= f.label :開始日時 %><br />
+                                <%= f.datetime_field :start_daytime, class:"form-control", value: @studyplan.start_daytime.strftime('%Y-%m-%dT%H:%M') %>
+                            </div>
+
+                            <div class="form-group">
+                                <%= f.label :終了日時 %><br />
+                                <%= f.datetime_field :end_daytime, class:"form-control", value: @studyplan.end_daytime.strftime('%Y-%m-%dT%H:%M') %>
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <%= f.submit "登録する", class:"btn btn-info" %>
+                        </div>
+                    <% end %>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

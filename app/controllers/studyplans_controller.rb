@@ -40,6 +40,7 @@ class StudyplansController < ApplicationController
     # 科目編集ページへ
     def edit
         @studyplan = Studyplan.find(params[:id])
+        @subject = Subject.find(@studyplan.subject_id)
     end
 
 
@@ -66,6 +67,20 @@ class StudyplansController < ApplicationController
     end
 
 
+    def complete
+        studyplan = Studyplan.find(params[:id])
+        studyplan.done_flag = true
+        studyplan.save
+        redirect_to studyplans_path
+    end
+
+
+    def incomplete
+        studyplan = Studyplan.find(params[:id])
+        studyplan.done_flag = false
+        studyplan.save
+        redirect_to studyplans_path
+    end
 
     private
 
