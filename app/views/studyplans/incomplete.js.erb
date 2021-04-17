@@ -1,0 +1,15 @@
+$('#studyplan_submit_<%= @studyplan.id %>').closest('form').attr('action', '/studyplans/<%= @studyplan.id %>/complete');
+
+
+
+$('#studyplan_submit_<%= @studyplan.id %>').attr('data-disable-with', '未完了');
+
+$('#studyplan_submit_<%= @studyplan.id %>').attr('defaultValue', '未完了');
+//$('#studyplan_submit_<%= @studyplan.id %>').attr('value', '未完了');
+$('#studyplan_submit_<%= @studyplan.id %>').val('未完了');
+$('#studyplan_submit_<%= @studyplan.id %>').attr('class', 'btn btn-outline-primary btn-sm');
+
+
+//$('#studyplan_td_<%= @studyplan.id %>').find('input').eq(3).remove();
+//$('#studyplan_submit_<%= @studyplan.id %>').closest('form').prepend('<input type="submit" name="commit" value="未完了" class="btn btn-outline-primary btn-sm" id="studyplan_submit_<%= @studyplan.id %>" data-disable-with="未完了"');
+$('#studyplan_td_<%= @studyplan.id %>').find('input').eq(0).remove();

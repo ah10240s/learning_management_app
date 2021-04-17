@@ -36,6 +36,7 @@
                         
                             <tbody>
                             <% @studyplans.each do |studyplan| %>
+                                <% @studyplan = studyplan %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
                                 <td><%= studyplan.id %></td>
@@ -44,19 +45,21 @@
                                 <td><%= format_change_datetime(studyplan.start_daytime) %></td>
                                 <td><%= format_change_datetime(studyplan.end_daytime) %></td>
                                 <td><%= time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
-                                <td>
+                                <td id="studyplan_td_<%= studyplan.id %>">
                                     <% if studyplan.done_flag %>
-                                    <%= link_to '完了', incomplete_studyplan_path(studyplan.id), method: :delete, class:"btn btn-block btn-primary btn-sm" %>
+                                        <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, local: true, 'data-disable-with' => false) do |f| %>
+                                            <div><%= hidden_field_tag :id, studyplan.id %></div>
+                                            <%= f.submit "完了", class: "btn btn-block bg-gradient-primary btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
+                                        <% end %>
                                     <% else %>
-                                    <%= link_to '未完了', complete_studyplan_path(studyplan.id), method: :post, class:"btn btn-outline-primary btn-sm" %>
+                                        <%= form_with(url: complete_studyplan_path(studyplan.id), method: :post, local: true, 'data-disable-with' => false) do |f| %>
+                                            <div><%= hidden_field_tag :id, studyplan.id %></div>
+                                            <%= f.submit "未完了", class: "btn btn-outline-primary btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
+                                        <% end %>
                                     <% end %>
                                 </td>
 
-
-
-
-
-                                <td><%= link_to '詳細', studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
+                                <td>
                                 <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
                                 <%= link_to '削除', studyplan, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
                                 </tr>
@@ -75,7 +78,3 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-
-
-
-<button type="button" class="btn btn-block btn-primary">Primary</button>

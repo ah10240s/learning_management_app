@@ -36,7 +36,7 @@
                                 <td><%= subject.id %></td>
                                 <td><%= subject.subject_name %></td>
                                 <td><%= subject.user_id %></td>
-                                <td><%= link_to '詳細', subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                <td>
                                 <%= link_to '編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
                                 <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
                                 </tr>

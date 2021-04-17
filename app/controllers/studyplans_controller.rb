@@ -68,18 +68,26 @@ class StudyplansController < ApplicationController
 
 
     def complete
-        studyplan = Studyplan.find(params[:id])
-        studyplan.done_flag = true
-        studyplan.save
+        @studyplan = Studyplan.find(params[:id])
+        @studyplan.done_flag = true
+        @studyplan.save
         redirect_to studyplans_path
+        # respond_to do |format|
+        #     format.html { redirect_to studyplans_path }
+        #     format.js
+        end
     end
 
 
     def incomplete
-        studyplan = Studyplan.find(params[:id])
-        studyplan.done_flag = false
-        studyplan.save
+        @studyplan = Studyplan.find(params[:id])
+        @studyplan.done_flag = false
+        @studyplan.save
         redirect_to studyplans_path
+        # respond_to do |format|
+        #     format.html { redirect_to studyplans_path }
+        #     format.js
+        end
     end
 
     private
