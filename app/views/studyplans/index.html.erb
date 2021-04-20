@@ -12,6 +12,9 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
+
+
 <!-- テーブル -->
 <section class="content">
     <div class="container-fluid">
@@ -44,17 +47,17 @@
                                 <td><%= studyplan.user_id %></td>
                                 <td><%= format_change_datetime(studyplan.start_daytime) %></td>
                                 <td><%= format_change_datetime(studyplan.end_daytime) %></td>
-                                <td><%= time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
                                 <td id="studyplan_td_<%= studyplan.id %>">
                                     <% if studyplan.done_flag %>
-                                        <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, local: true, 'data-disable-with' => false) do |f| %>
+                                        <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, remote: true, 'data-disable-with' => false) do |f| %>
                                             <div><%= hidden_field_tag :id, studyplan.id %></div>
                                             <%= f.submit "完了", class: "btn btn-block bg-gradient-primary btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
                                         <% end %>
                                     <% else %>
-                                        <%= form_with(url: complete_studyplan_path(studyplan.id), method: :post, local: true, 'data-disable-with' => false) do |f| %>
+                                        <%= form_with(url: complete_studyplan_path(studyplan.id), method: :post, remote: true, 'data-disable-with' => false) do |f| %>
                                             <div><%= hidden_field_tag :id, studyplan.id %></div>
-                                            <%= f.submit "未完了", class: "btn btn-outline-primary btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
+                                            <%= f.submit "完了", class: "btn btn-block btn-default btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
                                         <% end %>
                                     <% end %>
                                 </td>
@@ -78,3 +81,4 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+

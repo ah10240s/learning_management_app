@@ -19,8 +19,10 @@ Rails.application.routes.draw do
     end
   end
 
+  get  '/aggregates/aaa',  to: 'aggregates#aaa', as: 'aggregates_aaa'
+  resources :aggregates
 
-  resources :achievements
+
 
   devise_for :users, :controllers => {
     sessions: 'users/sessions',

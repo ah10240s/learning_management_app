@@ -27,7 +27,7 @@
     <%= render 'shared/sidebar' %>
 
       <!-- メインコンテンツ -->
-      <div class="content-wrapper">
+      <div class="content-wrapper" id="content-wrapper-ajax">
         <% flash.each do |message_type, message| %>
           <div class="alert alert-<%= message_type %>"><%= message %></div>
         <% end %>

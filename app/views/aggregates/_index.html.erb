@@ -1,0 +1,231 @@
+<% provide(:title, "[集計]週間学習実績") %>
+<p id="notice"><%= notice %></p>
+
+<!-- 上部 -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>[集計]学習予定一覧</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="btn-group">
+                                <%= link_to aggregates_aaa_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true do %>
+                                    <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
+                                        <span class="fa fa-chevron-left">
+                                        </span>
+                                        &nbsp;&nbsp;&nbsp;先週&nbsp;
+                                    </button>
+                                <% end %>
+                            </div>
+                            &nbsp;&nbsp;
+                            <div class="btn-group">
+                                <%= link_to aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true) do %>
+                                    <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
+                                        &nbsp;翌週&nbsp;&nbsp;&nbsp;
+                                        <span class="fa fa-chevron-right">
+                                        </span>
+                                    </button>
+                                <% end %>
+                            </div>
+
+                            <div class="ml-auto">
+                                <select class="form-control" name="select" onChange="location.href=value;">
+                                
+                                    <% if @select_done_flag == false then %>
+                                        <option value= <%= aggregates_path(date: @select_basedate, 
+                                                                    flag: false, 
+                                                                    direction: @select_direction, 
+                                                                    change_date_flag: false) %> >未完了</option>
+                                        <option value= <%= aggregates_path(date: @select_basedate, 
+                                                                    flag: true, 
+                                                                    direction: @select_direction, 
+                                                                    change_date_flag: false) %> >完了</option>
+                                    <% else %>
+                                        <option value= <%= aggregates_path(date: @select_basedate, 
+                                                                    flag: true, 
+                                                                    direction: @select_direction, 
+                                                                    change_date_flag: false) %> >完了</option>
+                                        <option value= <%= aggregates_path(date: @select_basedate, 
+                                                                    flag: false, 
+                                                                    direction: @select_direction, 
+                                                                    change_date_flag: false) %> >未完了</option>
+                                    <% end %>
+                                </select>
+                                
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <canvas id="weekChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<%= javascript_pack_tag 'chartjs/index' %>
+
+
+<script>
+    function formatTime_jp(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + "時間" + formatTimeNotation(divisor_for_minutes) + "分";
+    }
+
+    function formatTime(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + ":" + formatTimeNotation(divisor_for_minutes);
+    }
+
+    function formatTimeNotation(int){
+        if (int < 10) {
+            result = '0' + int.toString();
+        } else {
+            result = int;
+        }
+        return result;
+    }
+
+    var ctx = document.getElementById('weekChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <%== @array %>,
+            datasets: [{
+                label: '# 合計時間',
+                data: <%== @date %>,
+                backgroundColor: 'rgba(40,124,250,0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            tooltips:{
+                callbacks: 
+                {
+                    label: function(tooltipItems, data) {
+                        if(tooltipItems.yLabel == "0"){
+                            return "";
+                        }
+                        return data.datasets[tooltipItems.datasetIndex].label + "：" + formatTime_jp(tooltipItems.yLabel);
+                    }
+                }
+            },
+            legend: {
+                display: false  // 凡例削除
+            },
+            title: {
+                display: true,
+                fontSize: 20,
+                text: '週間学習実績'
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false    // 目盛を非表示
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {                 // 軸ラベル
+                        display: true,                // 表示設定
+                        labelString: '合計学習時間（hh/mm）',    // ラベル
+                        fontSize: 18                  // フォントサイズ
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 60,
+                        callback: function(label, index, labels) {
+                            return formatTime(label);
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+
+<%= javascript_pack_tag 'subjects/index' %>
+
+
+<!-- テーブル -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="users_example" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>学習予定ID</th>
+                                <th>科目名</th>
+                                <th>登録者ID</th>
+                                <th>開始時間</th>
+                                <th>終了時間</th>
+                                <th>勉強時間</th>
+                                <th>完了</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        
+                            <tbody>
+                            <% @studyplans.each do |studyplan| %>
+                                <% @studyplan = studyplan %>
+                                <% subject = Subject.find(studyplan.subject_id) %>
+                                <tr>
+                                <td><%= studyplan.id %></td>
+                                <td><%= subject.subject_name %></td>
+                                <td><%= studyplan.user_id %></td>
+                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
+                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= studyplan.done_flag %></td>
+                                </td>
+
+                                <td>
+                                <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '削除', studyplan, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                </tr>
+                            <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+
