@@ -22,7 +22,7 @@
                         <div class="row">
 
                             <div class="btn-group">
-                                <%= link_to aggregates_aaa_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true do %>
+                                <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true do %>
                                     <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
                                         <span class="fa fa-chevron-left">
                                         </span>
@@ -32,7 +32,7 @@
                             </div>
                             &nbsp;&nbsp;
                             <div class="btn-group">
-                                <%= link_to aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true) do %>
+                                <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true), remote: true do %>
                                     <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
                                         &nbsp;翌週&nbsp;&nbsp;&nbsp;
                                         <span class="fa fa-chevron-right">
@@ -42,29 +42,47 @@
                             </div>
 
                             <div class="ml-auto">
-                                <select class="form-control" name="select" onChange="location.href=value;">
-                                
-                                    <% if @select_done_flag == false then %>
-                                        <option value= <%= aggregates_path(date: @select_basedate, 
-                                                                    flag: false, 
-                                                                    direction: @select_direction, 
-                                                                    change_date_flag: false) %> >未完了</option>
-                                        <option value= <%= aggregates_path(date: @select_basedate, 
-                                                                    flag: true, 
-                                                                    direction: @select_direction, 
-                                                                    change_date_flag: false) %> >完了</option>
+                            
+                                <ul class="nav nav-pills">
+                                    <% if @select_done_flag == true then %>
+                                        <li class="nav-item">
+                                        <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                        flag: true, 
+                                                                        direction: @select_direction, 
+                                                                        change_date_flag: false), 
+                                                                        :class => 'nav-link active', 
+                                                                        
+                                                                        remote: true %></li>
+                                        <li class="nav-item">
+                                        <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                        flag: false, 
+                                                                        direction: @select_direction, 
+                                                                        change_date_flag: false), 
+                                                                        :class => 'nav-link', 
+                                                                        
+                                                                        remote: true %></li>
                                     <% else %>
-                                        <option value= <%= aggregates_path(date: @select_basedate, 
-                                                                    flag: true, 
-                                                                    direction: @select_direction, 
-                                                                    change_date_flag: false) %> >完了</option>
-                                        <option value= <%= aggregates_path(date: @select_basedate, 
-                                                                    flag: false, 
-                                                                    direction: @select_direction, 
-                                                                    change_date_flag: false) %> >未完了</option>
+                                        <li class="nav-item">
+                                        <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                        flag: true, 
+                                                                        direction: @select_direction, 
+                                                                        change_date_flag: false), 
+                                                                        :class => 'nav-link', 
+                                                                        
+                                                                        remote: true %></li>
+                                        <li class="nav-item">
+                                        <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                        flag: false, 
+                                                                        direction: @select_direction, 
+                                                                        change_date_flag: false), 
+                                                                        :class => 'nav-link active', 
+                                                                        
+                                                                        remote: true %></li>
+
                                     <% end %>
-                                </select>
-                                
+                                </ul>
+
+
                             </div>
 
                         </div>

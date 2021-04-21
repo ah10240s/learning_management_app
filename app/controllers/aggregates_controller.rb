@@ -30,18 +30,11 @@ class AggregatesController < ApplicationController
         @array = week_datetime_label(@select_basedate)
         @date = week_aggregates(@select_basedate, @select_done_flag)
 
-        # render index
-
-        # respond_to do |format|
-        #     format.html { render index }
-        #     format.js
-        # end
-        # debugger
     end
 
 
     # def index_ajax
-    def aaa
+    def index_ajax
         # debugger
         if params[:flag] then
             @select_done_flag = ActiveRecord::Type::Boolean.new.cast(params[:flag])
@@ -70,7 +63,7 @@ class AggregatesController < ApplicationController
         # render index
 
         respond_to do |format|
-            format.html { render aaa }
+            format.html { redirect_to aggregates_path }
             format.js
         end
         # debugger

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get  '/aggregates/aaa',  to: 'aggregates#aaa', as: 'aggregates_aaa'
+  get  '/aggregates/index_ajax',  to: 'aggregates#index_ajax', as: 'index_ajax_aggregates'
   resources :aggregates
 
 
