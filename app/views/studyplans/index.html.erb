@@ -39,7 +39,7 @@
                         
                             <tbody>
                             <% @studyplans.each do |studyplan| %>
-                                <% @studyplan = studyplan %>
+                                
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
                                 <td><%= studyplan.id %></td>
