@@ -48,7 +48,19 @@
                                 <td><%= format_change_datetime(studyplan.start_daytime) %></td>
                                 <td><%= format_change_datetime(studyplan.end_daytime) %></td>
                                 <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
-                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td id="studyplan_td_<%= studyplan.id %>">
+                                    <% if studyplan.done_flag %>
+                                        <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, remote: true) do |f| %>
+                                            <div><%= hidden_field_tag :id, studyplan.id %></div>
+                                            <%= f.submit "完了", class: "btn btn-block bg-gradient-primary btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
+                                        <% end %>
+                                    <% else %>
+                                        <%= form_with(url: complete_studyplan_path(studyplan.id), method: :post, remote: true) do |f| %>
+                                            <div><%= hidden_field_tag :id, studyplan.id %></div>
+                                            <%= f.submit "完了", class: "btn btn-block btn-default btn-sm", id: "studyplan_submit_#{ studyplan.id }" %>
+                                        <% end %>
+                                    <% end %>
+                                </td>
 
                                 <td>
                                 <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
