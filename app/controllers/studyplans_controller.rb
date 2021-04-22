@@ -1,6 +1,6 @@
 class StudyplansController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_current_user, only: [:new, :index, :edit, :update, :show]
+    before_action :set_current_user
 
 
     # GET: /studyplans
@@ -25,12 +25,13 @@ class StudyplansController < ApplicationController
     # POST: /studyplans
     # 科目追加処理
     def create
-        studyplan = Studyplan.new(studyplans_params)
-        if studyplan.save
+        @studyplan = Studyplan.new(studyplans_params)
+        @subjects = @user.subjects
+        if @studyplan.save
             flash[:success] = "科目を追加しました。" #（success、info、warning、danger）
             redirect_to studyplans_path
         else
-            flash[:danger] = "科目を登録出来ませんでした。"
+            # flash[:danger] = "科目を登録出来ませんでした。"
             render 'new'
         end
     end
@@ -47,12 +48,13 @@ class StudyplansController < ApplicationController
     # PATCH/PUT: /studyplans/:id
     # 科目情報変更処理
     def update
-        studyplan = Studyplan.find(params[:id])
-        if studyplan.update(studyplans_params)
+        @studyplan = Studyplan.find(params[:id])
+        @subject = Subject.find(@studyplan.subject_id)
+        if @studyplan.update(studyplans_params)
             flash[:success] = "科目内容を変更しました。" #（success、info、warning、danger）
             redirect_to studyplans_path
         else
-            flash[:danger] = "科目内容を変更出来ませんでした。"
+            # flash[:danger] = "科目内容を変更出来ませんでした。"
             render 'edit'
         end
     end

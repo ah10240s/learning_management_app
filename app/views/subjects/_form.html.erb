@@ -1,6 +1,7 @@
 <section class="content">
 
     <%= form_with(model: @subject, local: true) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
 
         <div class="card-body">
             <div class="form-group col-sm-6">

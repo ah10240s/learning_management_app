@@ -1,0 +1,22 @@
+ja:
+  activerecord:
+    models:
+      subject: 科目
+    attributes:
+      subject:
+        id: 科目ID
+        subject_name: 科目名
+        user_id: ユーザーID
+    models:
+      studyplan: 学習予定
+    attributes:
+      studyplan:
+        id: 学習予定ID
+        user_id: ユーザーID
+        subject_id: 科目
+        subject: 科目
+        start_daytime: 開始日時
+        end_daytime: 終了日時
+        done_flag: 完了ステータス
+
+

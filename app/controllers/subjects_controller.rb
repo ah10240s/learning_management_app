@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :set_current_user, only: [:new, :index, :edit, :update, :show]
+  before_action :set_current_user
 
 
   # GET: /subjects
@@ -27,12 +27,12 @@ class SubjectsController < ApplicationController
   # POST: /subjects
   # 科目追加処理
   def create
-    subject = Subject.new(sbject_params)
-    if subject.save
+    @subject = Subject.new(sbject_params)
+    if @subject.save
       flash[:success] = "科目を追加しました。" #（success、info、warning、danger）
       redirect_to subjects_path
     else
-      flash[:danger] = "科目を登録出来ませんでした。"
+      # flash[:danger] = "※科目を登録出来ませんでした。"
       render 'new'
     end
   end
@@ -48,12 +48,12 @@ class SubjectsController < ApplicationController
   # PATCH/PUT: /subjects/:id
   # 科目情報変更処理
   def update
-    subject = Subject.find(params[:id])
-    if subject.update(sbject_params)
+    @subject = Subject.find(params[:id])
+    if @subject.update(sbject_params)
       flash[:success] = "科目内容を変更しました。" #（success、info、warning、danger）
       redirect_to subjects_path
     else
-      flash[:danger] = "科目内容を変更出来ませんでした。"
+      # flash[:danger] = "科目内容を変更出来ませんでした。"
       render 'edit'
     end
   end

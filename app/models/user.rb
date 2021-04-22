@@ -5,20 +5,24 @@ class User < ApplicationRecord
   has_many :studyplans, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+          :recoverable, :rememberable, :validatable
   validates :username,
     uniqueness: { case_sensitive: :false },
     length: { minimum: 4, maximum: 20 },
     presence: true
+    VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, length: { maximum: 255 },
+    format: { with: VALID_EMAIL_REGEX },
+    uniqueness: true
 
     #登録時＆ログイン時？にメールアドレスを不要とする
-    def email_required?
-      false
-    end
+    # def email_required?
+    #   false
+    # end
   
-    def email_changed?
-      false
-    end
+    # def email_changed?
+    #   false
+    # end
 
 
 

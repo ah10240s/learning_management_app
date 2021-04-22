@@ -15,8 +15,13 @@
 
   
   <body class="hold-transition login-page">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <!--<p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>-->
+    <div class="login-box">
+        <% flash.each do |message_type, message| %>
+              <div class="alert alert-<%= message_type %>"><%= message %></div>
+        <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>

@@ -82,15 +82,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <%= link_to  destroy_user_session_path, method: :delete, class: 'nav-link' do %>
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>確認</p>
-                            <% end %>
-                        </li>
-                        <li class="nav-item">
                             <%= link_to  edit_user_registration_path, method: :get, class: 'nav-link' do %>
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>編集</p>
+                            <% end %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to  user_registration_path, method: :delete, class: 'nav-link', data: { confirm: '本当によろしいでしょうか？' } do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>退会</p>
                             <% end %>
                         </li>
                     </ul>
