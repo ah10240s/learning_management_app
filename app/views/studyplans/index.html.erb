@@ -27,13 +27,11 @@
                         <table id="users_example" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>学習予定ID</th>
                                 <th>科目名</th>
-                                <th>登録者ID</th>
+                                <th>完了</th>
                                 <th>開始時間</th>
                                 <th>終了時間</th>
                                 <th>勉強時間</th>
-                                <th>完了</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -43,12 +41,7 @@
                                 
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td><%= studyplan.id %></td>
-                                <td><%= subject.subject_name %></td>
-                                <td><%= studyplan.user_id %></td>
-                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
-                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
-                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>   
                                 <td id="studyplan_td_<%= studyplan.id %>">
                                     <% if studyplan.done_flag %>
                                         <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, remote: true) do |f| %>
@@ -62,7 +55,10 @@
                                         <% end %>
                                     <% end %>
                                 </td>
-
+                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
+                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                
                                 <td>
                                 <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
                                 <%= link_to '削除', studyplan, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>

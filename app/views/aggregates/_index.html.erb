@@ -19,75 +19,75 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="row">
-
-                            <div class="btn-group">
-                                <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true do %>
-                                    <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
-                                        <span class="fa fa-chevron-left">
-                                        </span>
-                                        &nbsp;&nbsp;&nbsp;先週&nbsp;
-                                    </button>
-                                <% end %>
+                        <div class="row fc">
+                            <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
+                                <div class="fc-toolbar-chunk">
+                                    <div class="btn-group">
+                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
+                                            <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
+                                                <span class="fa fa-chevron-left">
+                                                </span>
+                                                &nbsp;&nbsp;&nbsp;先週&nbsp;
+                                            </button>
+                                        <% end %>
+                                    </div>
+                                    
+                                    <div class="btn-group">
+                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
+                                            <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
+                                                &nbsp;翌週&nbsp;&nbsp;&nbsp;
+                                                <span class="fa fa-chevron-right">
+                                                </span>
+                                            </button>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                <div class="fc-toolbar-chunk">&nbsp;</div>
+                                <div class="fc-toolbar-chunk">
+                                    <!-- <div class="ml-auto"> -->
+                                    <ul class="nav nav-pills">
+                                        <% if @select_done_flag == true then %>
+                                            <li class="nav-item">
+                                            <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                            flag: true, 
+                                                                            direction: @select_direction, 
+                                                                            change_date_flag: false), 
+                                                                            :class => 'nav-link active', 
+                                                                            
+                                                                            remote: true %></li>
+                                            <li class="nav-item">
+                                            <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                            flag: false, 
+                                                                            direction: @select_direction, 
+                                                                            change_date_flag: false), 
+                                                                            :class => 'nav-link', 
+                                                                            
+                                                                            remote: true %></li>
+                                        <% else %>
+                                            <li class="nav-item">
+                                            <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                            flag: true, 
+                                                                            direction: @select_direction, 
+                                                                            change_date_flag: false), 
+                                                                            :class => 'nav-link', 
+                                                                            
+                                                                            remote: true %></li>
+                                            <li class="nav-item">
+                                            <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
+                                                                            flag: false, 
+                                                                            direction: @select_direction, 
+                                                                            change_date_flag: false), 
+                                                                            :class => 'nav-link active', 
+                                                                            
+                                                                            remote: true %></li>
+                                        <% end %>
+                                    </ul>
+                                <!--</div> -->
+                                </div>
                             </div>
-                            &nbsp;&nbsp;
-                            <div class="btn-group">
-                                <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true), remote: true do %>
-                                    <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
-                                        &nbsp;翌週&nbsp;&nbsp;&nbsp;
-                                        <span class="fa fa-chevron-right">
-                                        </span>
-                                    </button>
-                                <% end %>
-                            </div>
-
-                            <div class="ml-auto">
-                            
-                                <ul class="nav nav-pills">
-                                    <% if @select_done_flag == true then %>
-                                        <li class="nav-item">
-                                        <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                        flag: true, 
-                                                                        direction: @select_direction, 
-                                                                        change_date_flag: false), 
-                                                                        :class => 'nav-link active', 
-                                                                        
-                                                                        remote: true %></li>
-                                        <li class="nav-item">
-                                        <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                        flag: false, 
-                                                                        direction: @select_direction, 
-                                                                        change_date_flag: false), 
-                                                                        :class => 'nav-link', 
-                                                                        
-                                                                        remote: true %></li>
-                                    <% else %>
-                                        <li class="nav-item">
-                                        <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                        flag: true, 
-                                                                        direction: @select_direction, 
-                                                                        change_date_flag: false), 
-                                                                        :class => 'nav-link', 
-                                                                        
-                                                                        remote: true %></li>
-                                        <li class="nav-item">
-                                        <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                        flag: false, 
-                                                                        direction: @select_direction, 
-                                                                        change_date_flag: false), 
-                                                                        :class => 'nav-link active', 
-                                                                        
-                                                                        remote: true %></li>
-
-                                    <% end %>
-                                </ul>
-
-
-                            </div>
-
                         </div>
                         <div class="row">
-                            <canvas id="weekChart"></canvas>
+                            <canvas id="weekChart"  style="min-height: 300px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                 }],
                 yAxes: [{
                     scaleLabel: {                 // 軸ラベル
-                        display: true,                // 表示設定
+                        display: false,                // 表示設定
                         labelString: '合計学習時間（hh/mm）',    // ラベル
                         fontSize: 18                  // フォントサイズ
                     },
@@ -201,13 +201,12 @@
                         <table id="users_example" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>学習予定ID</th>
+                                
                                 <th>科目名</th>
-                                <th>登録者ID</th>
+                                <th>完了</th>
                                 <th>開始時間</th>
                                 <th>終了時間</th>
                                 <th>勉強時間</th>
-                                <th>完了</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -217,13 +216,17 @@
                                 <% @studyplan = studyplan %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td><%= studyplan.id %></td>
-                                <td><%= subject.subject_name %></td>
-                                <td><%= studyplan.user_id %></td>
+                                <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td>
+                                    <% if studyplan.done_flag %>
+                                        完了
+                                    <% else %>
+                                        未完了
+                                    <% end %>
+                                </td>
                                 <td><%= format_change_datetime(studyplan.start_daytime) %></td>
                                 <td><%= format_change_datetime(studyplan.end_daytime) %></td>
                                 <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
-                                <td><%= studyplan.done_flag %></td>
                                 </td>
 
                                 <td>

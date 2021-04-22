@@ -13,7 +13,6 @@ require('datatables.net-buttons-bs4');
 
 
 
-
 import '../../stylesheets/subjects/index.scss';
 
 $(function() {
