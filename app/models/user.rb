@@ -33,6 +33,12 @@ class User < ApplicationRecord
         done_flag: select_flag)
   end
 
+    # 基準日を含む1週間の学習実績
+    def week_tally_allstudyplans(tally_basedate)
+      studyplans = self.studyplans.where(
+          start_daytime: (start_week_basedate(tally_basedate)+ 9.hours)..(end_week_basedate(tally_basedate)+ 9.hours))
+    end
+
 private
 
   def start_week_basedate(basedate)

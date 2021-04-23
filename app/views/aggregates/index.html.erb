@@ -6,11 +6,15 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1>[集計]学習予定一覧</h1>
+            <h1>[集計]週間学習実績</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
+
+
+
 
 <section class="content">
     <div class="container-fluid">
@@ -185,6 +189,65 @@
         }
     });
 </script>
+
+
+
+
+
+
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <!-- Small Box (Stat card) -->
+                <div class="row">
+                    <div class="col-lg-4 col-4">
+                        <!-- small card -->
+                        <div class="small-box ov-bg-info">
+                            <div class="inner">
+                                <h4><strong><%= @all_date_time %></strong></h4>
+                                <p>予定時間</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-hourglass-start"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-4">
+                        <!-- small card -->
+                        <div class="small-box ov-bg-info">
+                            <div class="inner">
+                                <h4><strong><%= @done_date_time %></strong></h4>
+                                <p>実施時間</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-hourglass-end"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-4 col-4">
+                        <!-- small card -->
+                        <div class="small-box ov-bg-info">
+                            <div class="inner">
+                                <h4><strong><%= @achievement_rate %><sup style="font-size: 15px">%</sup></strong></h4>
+                                <p>達成割合</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                        </div>
+                    </div>
+                <!-- ./col -->
+                </div>
+            <!-- /.row -->
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
 
 <%= javascript_pack_tag 'subjects/index' %>

@@ -5,7 +5,6 @@ class AggregatesController < ApplicationController
     # GET: /aggregates
     # 科目一覧ページへ
     def index
-        # debugger
         if params[:flag] then
             @select_done_flag = ActiveRecord::Type::Boolean.new.cast(params[:flag])
             @select_basedate = Time.parse(params[:date])
@@ -30,12 +29,23 @@ class AggregatesController < ApplicationController
         @array = week_datetime_label(@select_basedate)
         @date = week_aggregates(@select_basedate, @select_done_flag)
 
+        all_studyplans = @user.week_tally_allstudyplans(@select_basedate)
+        done_date_time = week_aggregates_sum(true, all_studyplans)
+        all_date_time = week_aggregates_sum(false, all_studyplans)
+
+        @done_date_time = time_conversion_hhmm(done_date_time)
+        @all_date_time = time_conversion_hhmm(all_date_time)
+        if done_date_time != 0 then
+            @achievement_rate = ((done_date_time / all_date_time) * 100).round(1)
+        else
+            @achievement_rate = 0.0
+        end
+        
     end
 
 
     # def index_ajax
     def index_ajax
-        # debugger
         if params[:flag] then
             @select_done_flag = ActiveRecord::Type::Boolean.new.cast(params[:flag])
             @select_basedate = Time.parse(params[:date])
@@ -59,6 +69,20 @@ class AggregatesController < ApplicationController
         @studyplans = @user.week_tally_studyplans(@select_basedate, @select_done_flag)
         @array = week_datetime_label(@select_basedate)
         @date = week_aggregates(@select_basedate, @select_done_flag)
+
+        all_studyplans = @user.week_tally_allstudyplans(@select_basedate)
+        done_date_time = week_aggregates_sum(true, all_studyplans)
+        all_date_time = week_aggregates_sum(false, all_studyplans)
+
+        @done_date_time = time_conversion_hhmm(done_date_time)
+        @all_date_time = time_conversion_hhmm(all_date_time)
+
+        if done_date_time != 0 then
+            @achievement_rate = ((done_date_time / all_date_time) * 100).round(1)
+        else
+            @achievement_rate = 0.0
+        end
+
 
         # render index
 
@@ -69,7 +93,57 @@ class AggregatesController < ApplicationController
         # debugger
     end
 
-    # 基準日を含む1週間の日付ラベル
+
+
+
+    def week_aggregates_sum(select_flag,studyplans)
+    
+        difference_timea = 0
+        
+        if select_flag == false then
+            # 全て抽出
+            studyplans.each do |studyplan|
+                difference_timea = difference_timea + (studyplan.end_daytime - studyplan.start_daytime)
+            end
+        else
+            studyplans.each do |studyplan|
+                # 完了済のみ抽出
+                if studyplan.done_flag == true then
+                    difference_timea = difference_timea + (studyplan.end_daytime - studyplan.start_daytime)
+                end
+            end
+        end
+        
+        difference_timea
+
+    end
+
+    def time_conversion_hhmm(target)
+        hour = target / 3600.0
+        surplus = target % 3600.0
+        # debugger
+
+        if surplus == 0.0 then
+            "#{hour.to_i}:00"
+
+        elsif hour < 1.0 then
+            minutes = target / 60.0
+            "#{hour.to_i}:#{minutes.to_i}"
+
+        else
+            minutes = (target - (hour.to_i * 3600)) / 60.0
+            if minutes < 10.0 then
+                "#{hour.to_i}:0#{minutes.to_i}"
+            else
+                "#{hour.to_i}:#{minutes.to_i}"
+            end
+
+        end
+    end
+
+
+
+    # 基準日を含む1週間の時間を取得
     def week_aggregates(basedate,select_flag)
         startdate = start_week_basedate(basedate) 
         result = [ 
@@ -129,10 +203,9 @@ class AggregatesController < ApplicationController
 
 
     # 基準日を含む1週間の学習実績
-    def week_tally_studyplans(user,tally_basedate,select_flag)
+    def week_tally_allstudyplans(user,tally_basedate)
         studyplans = user.studyplans.where(
-            start_daytime: start_week_basedate(tally_basedate)..end_week_basedate(tally_basedate),
-            done_flag: select_flag)
+            start_daytime: (start_week_basedate(tally_basedate)+ 9.hours)..(end_week_basedate(tally_basedate)+ 9.hours))
     end
 
         # 3日前の日にちを返す
