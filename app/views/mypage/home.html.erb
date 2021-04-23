@@ -1,17 +1,287 @@
-    <% provide(:title, "マイページ") %>
-    <% if user_signed_in? %>
-        ログイン済<br>
-<%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-<br><br>
-<%= link_to "登録情報編集", edit_user_registration_path, method: :get %>
-    <% else %>
-        未ログイン<br>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-    <% end %>
 
-    <br><br>
-    <% aa = current_user %>
-    <%= aa.id %>
-<%= current_user.id %>
+<%= javascript_pack_tag 'subjects/index' %>
+<%= stylesheet_pack_tag 'subjects/index' %>
+
+
+<% provide(:title, "ホーム") %>
+<p id="notice"><%= notice %></p>
+
+<!-- 上部 -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            <h1>ダッシュボード</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+
+<!-- テーブル -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card table-responsive p-0" style="max-height: 500px;">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title"><strong>本日の学習予定</strong></h5>
+                            <%= link_to "詳細", studyplans_path, method: :get %>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+                        <table id="users_example" class="table table-bordered table-hover table-head-fixed">
+                            <thead>
+                            <tr>
+                                
+                                <th>科目名</th>
+                                <th>完了</th>
+                                <th>開始時間</th>
+                                <th>終了時間</th>
+                                <th>勉強時間</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        
+                            <tbody>
+                            <% @studyplans.each do |studyplan| %>
+                                <% @studyplan = studyplan %>
+                                <% subject = Subject.find(studyplan.subject_id) %>
+                                <tr>
+                                <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td>
+                                    <% if studyplan.done_flag %>
+                                        完了
+                                    <% else %>
+                                        未完了
+                                    <% end %>
+                                </td>
+                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
+                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                </td>
+
+                                <td>
+                                <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>
+                                <%= link_to '削除', studyplan, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                </tr>
+                            <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+
+
+
+    <!-- /style="min-height: 300px; height: 500px; max-height: 700px; max-width: 100%;"> -->
+            
+                <div class="col-md-4">
+                    <div class="card table-responsive p-0" style="max-height: 500px;">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title"><strong>科目一覧</strong></h5>
+                                <%= link_to "詳細", subjects_path, method: :get %>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="users_example2" class="table table-bordered table-hover table-head-fixed">
+                                <thead>
+                                <tr>
+                                    <th>科目名</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                            
+                                <tbody>
+                                <% @subjects.each do |subject| %>
+                                    <tr>
+                                    <td><%= subject.subject_name %></td>
+                                    <td>
+                                    <%= link_to '編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                    <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title"><strong>週間学習実績</strong></h5>
+                            <%= link_to "詳細", aggregates_path, method: :get %>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <canvas id="weekChart" style="min-height: 300px; height: 500px; max-height: 700px; max-width: 100%;"></canvas>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="col-lg-4 col-4">
+                                <!-- small card -->
+                                <div class="small-box ov-bg-info">
+                                    <div class="inner">
+                                        <h4><strong><%= @all_date_time %></strong></h4>
+                                        <p>予定時間</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-hourglass-start"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-4 col-4">
+                                <!-- small card -->
+                                <div class="small-box ov-bg-info">
+                                    <div class="inner">
+                                        <h4><strong><%= @done_date_time %></strong></h4>
+                                        <p>実施時間</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-hourglass-end"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ./col -->
+                            <div class="col-lg-4 col-4">
+                                <!-- small card -->
+                                <div class="small-box ov-bg-info">
+                                    <div class="inner">
+                                        <h4><strong><%= @achievement_rate %><sup style="font-size: 15px">%</sup></strong></h4>
+                                        <p>達成割合</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- ./col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<%= javascript_pack_tag 'chartjs/index' %>
+<%= stylesheet_pack_tag 'chartjs/index' %>
+
+<script>
+    function formatTime_jp(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + "時間" + formatTimeNotation(divisor_for_minutes) + "分";
+    }
+
+    function formatTime(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + ":" + formatTimeNotation(divisor_for_minutes);
+    }
+
+    function formatTimeNotation(int){
+        if (int < 10) {
+            result = '0' + int.toString();
+        } else {
+            result = int;
+        }
+        return result;
+    }
+
+    var ctx = document.getElementById('weekChart');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <%== @array %>,
+            datasets: [{
+                label: '# 予定時間',
+                data: <%== @date_all %>,
+                backgroundColor: 'rgba(40,124,250,0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },{
+                label: '# 実施時間',
+                data: <%== @date_done %>,
+                backgroundColor: 'rgba(219,39,91,0.5)',
+                borderColor: 'rgba(219,39,91,1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            tooltips:{
+                callbacks: 
+                {
+                    label: function(tooltipItems, data) {
+                        if(tooltipItems.yLabel == "0"){
+                            return "";
+                        }
+                        return data.datasets[tooltipItems.datasetIndex].label + "：" + formatTime_jp(tooltipItems.yLabel);
+                    }
+                }
+            },
+            legend: {
+                display: true  // 凡例
+            },
+            title: {
+                display: true,
+                fontSize: 20,
+                text: '週間学習実績'
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        display: false    // 目盛を非表示
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {                 // 軸ラベル
+                        display: false,                // 表示設定
+                        labelString: '合計学習時間（hh/mm）',    // ラベル
+                        fontSize: 18                  // フォントサイズ
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 60,
+                        callback: function(label, index, labels) {
+                            return formatTime(label);
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 
 
