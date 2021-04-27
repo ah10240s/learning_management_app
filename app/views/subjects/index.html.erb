@@ -1,8 +1,8 @@
 <% provide(:title, "科目一覧") %>
 <p id="notice"><%= notice %></p>
 
-<%= javascript_pack_tag 'subjects/index' %>
-<%= stylesheet_pack_tag 'subjects/index' %>
+<%= javascript_pack_tag 'datatables/index' %>
+<%= stylesheet_pack_tag 'datatables/index' %>
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
@@ -21,7 +21,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="users_example" class="table table-bordered table-hover">
+                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th style="width:25%;">科目ID</th>

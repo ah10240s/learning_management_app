@@ -8,34 +8,35 @@ class MypageController < ApplicationController
             redirect_to new_user_session_path
         end
 
-        @select_basedate = Time.now
-        @studyplans = @user.studyplans.where(
-            start_daytime: (@select_basedate.change(hour: 0) + 9.hours)..(@select_basedate.change(hour: 23, min: 59) + 9.hours))
+        @select_basedate = (Time.now) - 3.days
+        @all_studyplans_byday = @user.byday_studyplans(@select_basedate)
         @subjects = @user.subjects
-        
 
-        @array = week_datetime_label(@select_basedate)
-        @date_done = week_aggregates(@select_basedate, true)
-        date_notyet = week_aggregates(@select_basedate, false)
+        all_studyplans_week = @user.week_studyplans(@select_basedate)
+        done_studyplans_week = extract_studyplans_done_notyet(all_studyplans_week, true)
+        notyet_studyplans_week = extract_studyplans_done_notyet(all_studyplans_week, false)
 
-        @date_all =[
-                    (@date_done[0] + date_notyet[0]),
-                    (@date_done[1] + date_notyet[1]),
-                    (@date_done[2] + date_notyet[2]),
-                    (@date_done[3] + date_notyet[3]),
-                    (@date_done[4] + date_notyet[4]),
-                    (@date_done[5] + date_notyet[5]),
-                    (@date_done[6] + date_notyet[6])
+        @datatables_ylabels = multipledays_format_change_datetime_md(@select_basedate, 7)
+        @done_week_studyhours = multipledays_studyhours_min(done_studyplans_week, @select_basedate, 7)
+        notyet_week_studyhours = multipledays_studyhours_min(notyet_studyplans_week, @select_basedate, 7)
+
+        @all_week_studyhours =[
+                    (@done_week_studyhours[0] + notyet_week_studyhours[0]),
+                    (@done_week_studyhours[1] + notyet_week_studyhours[1]),
+                    (@done_week_studyhours[2] + notyet_week_studyhours[2]),
+                    (@done_week_studyhours[3] + notyet_week_studyhours[3]),
+                    (@done_week_studyhours[4] + notyet_week_studyhours[4]),
+                    (@done_week_studyhours[5] + notyet_week_studyhours[5]),
+                    (@done_week_studyhours[6] + notyet_week_studyhours[6])
         ]
 
-        all_studyplans = @user.week_tally_allstudyplans(@select_basedate)
-        done_date_time = week_aggregates_sum(true, all_studyplans)
-        all_date_time = week_aggregates_sum(false, all_studyplans)
+        done_sum_studyhours_week = sum_studyhours_int(done_studyplans_week)
+        all_sum_studyhours_week = sum_studyhours_int(all_studyplans_week)
 
-        @done_date_time = time_conversion_hhmm(done_date_time)
-        @all_date_time = time_conversion_hhmm(all_date_time)
-        if done_date_time != 0 then
-            @achievement_rate = ((done_date_time / all_date_time) * 100).round(1)
+        @done_sum_studyhours_week = time_conversion_hhmm(done_sum_studyhours_week)
+        @all_sum_studyhours_week = time_conversion_hhmm(all_sum_studyhours_week)
+        if done_sum_studyhours_week != 0 then
+            @achievement_rate = ((done_sum_studyhours_week / all_sum_studyhours_week) * 100).round(1)
         else
             @achievement_rate = 0.0
         end
@@ -47,10 +48,3 @@ class MypageController < ApplicationController
     end
 
 end
-# .layout-fixed .main-sidebar {
-#     bottom: 0;
-#     float: none;
-#     left: 0;
-#     position: fixed;
-#     top: 0;
-# }

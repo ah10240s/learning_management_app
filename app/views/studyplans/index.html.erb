@@ -1,8 +1,8 @@
 <% provide(:title, "学習予定一覧") %>
 <p id="notice"><%= notice %></p>
 
-<%= javascript_pack_tag 'subjects/index' %>
-<%= stylesheet_pack_tag 'subjects/index' %>
+<%= javascript_pack_tag 'datatables/index' %>
+<%= stylesheet_pack_tag 'datatables/index' %>
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
@@ -24,7 +24,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="users_example" class="table table-bordered table-hover">
+                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>科目名</th>
@@ -55,9 +55,9 @@
                                         <% end %>
                                     <% end %>
                                 </td>
-                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
-                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
-                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.start_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.daytime_difference_hhmm() %></td>
                                 
                                 <td>
                                 <%= link_to '編集', edit_studyplan_path(studyplan.id), class:"btn btn-outline-primary btn-sm" %>

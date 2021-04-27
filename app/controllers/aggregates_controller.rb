@@ -5,13 +5,14 @@ class AggregatesController < ApplicationController
     # GET: /aggregates
     # 科目一覧ページへ
     def index
+        # 
         if params[:flag] then
             @select_done_flag = ActiveRecord::Type::Boolean.new.cast(params[:flag])
             @select_basedate = Time.parse(params[:date])
             @select_direction = params[:direction]
         else
             @select_done_flag = true
-            @select_basedate = Time.now
+            @select_basedate = (Time.now) - 3.days
             @select_direction = ""
         end
 
@@ -25,22 +26,24 @@ class AggregatesController < ApplicationController
             end
         end
 
-        @studyplans = @user.week_tally_studyplans(@select_basedate, @select_done_flag)
-        @array = week_datetime_label(@select_basedate)
-        @date = week_aggregates(@select_basedate, @select_done_flag)
 
-        all_studyplans = @user.week_tally_allstudyplans(@select_basedate)
-        done_date_time = week_aggregates_sum(true, all_studyplans)
-        all_date_time = week_aggregates_sum(false, all_studyplans)
+        all_studyplans_week = @user.week_studyplans(@select_basedate)
+        @studyplans_week = extract_studyplans_done_notyet(all_studyplans_week, @select_done_flag)
 
-        @done_date_time = time_conversion_hhmm(done_date_time)
-        @all_date_time = time_conversion_hhmm(all_date_time)
-        if done_date_time != 0 then
-            @achievement_rate = ((done_date_time / all_date_time) * 100).round(1)
+        @datatables_ylabels = multipledays_format_change_datetime_md(@select_basedate, 7)
+        @all_week_studyhours = multipledays_studyhours_min(@studyplans_week, @select_basedate, 7)
+
+        done_sum_studyhours_week = sum_studyhours_int(extract_studyplans_done_notyet(all_studyplans_week, true))
+        all_sum_studyhours_week = sum_studyhours_int(all_studyplans_week)
+
+        @done_sum_studyhours_week = time_conversion_hhmm(done_sum_studyhours_week)
+        @all_sum_studyhours_week = time_conversion_hhmm(all_sum_studyhours_week)
+        if done_sum_studyhours_week != 0 then
+            @achievement_rate = ((done_sum_studyhours_week / all_sum_studyhours_week) * 100).round(1)
         else
             @achievement_rate = 0.0
         end
-        
+
     end
 
 

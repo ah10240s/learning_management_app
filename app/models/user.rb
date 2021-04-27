@@ -26,32 +26,100 @@ class User < ApplicationRecord
 
 
 
+  # #####################################
+  # 1週間の学習予定を返す（return_studyplansの拡張版）
+  # #######################
+  # tally_basedate：基準日（最過去日を指定する）
+  # alldate_flag：完了済、未完了関係なく全ての学習予定を返す場合は「true」、どちらか飲みの場合は「false」
+  # done_flag：alldate_flagが「false」の時飲み有効。完了済の学習予定を返す場合「true」、未完了の学習予定を返す場合「false」
+  # #####################################
+  def week_studyplans(tally_basedate, alldate_flag = true, done_flag = true)
 
-  def week_tally_studyplans(tally_basedate,select_flag)
-    studyplans = self.studyplans.where(
-        start_daytime: (start_week_basedate(tally_basedate)+ 9.hours)..(end_week_basedate(tally_basedate)+ 9.hours),
-        done_flag: select_flag)
-  end
+    buf_studyplans = return_studyplans(tally_basedate, 7)
+    return_date = []
 
-    # 基準日を含む1週間の学習実績
-    def week_tally_allstudyplans(tally_basedate)
-      studyplans = self.studyplans.where(
-          start_daytime: (start_week_basedate(tally_basedate)+ 9.hours)..(end_week_basedate(tally_basedate)+ 9.hours))
+    if alldate_flag == false then
+      # 完了済 or 未完了の学習予定のみを抽出する場合
+
+      if done_flag == true then
+        # 完了済
+        buf_studyplans.each do |studyplan|
+          if studyplan.done_flag = true then
+            return_date << studyplan
+          end
+        end
+      else
+        # 未完了
+        buf_studyplans.each do |studyplan|
+          if studyplan.done_flag = false then
+            return_date << studyplan
+          end
+        end
+      end
+
+    else
+      # 全ての学習予定を返す
+      return_date = buf_studyplans
     end
+    return return_date
+  end
 
-private
+  # #####################################
+  # 1日の学習予定を返す（return_studyplansの拡張版）
+  # #######################
+  # tally_basedate：基準日
+  # alldate_flag：完了済、未完了関係なく全ての学習予定を返す場合は「true」、どちらか飲みの場合は「false」
+  # done_flag：alldate_flagが「false」の時飲み有効。完了済の学習予定を返す場合「true」、未完了の学習予定を返す場合「false」
+  # #####################################
+  def byday_studyplans(tally_basedate, alldate_flag = true, done_flag = true)
 
-  def start_week_basedate(basedate)
-      start_date = basedate - 3.days
-      start_date.change(hour: 0)
+    buf_studyplans = return_studyplans(tally_basedate)
+    return_date = []
+
+    if alldate_flag == false then
+      # 完了済 or 未完了の学習予定のみを抽出する場合
+
+      if done_flag == true then
+        # 完了済
+        buf_studyplans.each do |studyplan|
+          if studyplan.done_flag = true then
+            return_date << studyplan
+          end
+        end
+      else
+        # 未完了
+        buf_studyplans.each do |studyplan|
+          if studyplan.done_flag = false then
+            return_date << studyplan
+          end
+        end
+      end
+
+    else
+      # 全ての学習予定を返す
+      return_date = buf_studyplans
+    end
+    return return_date
   end
 
 
+  # #####################################
+  # 学習予定をDBから取り出す  
+  # #######################
+  # basedate：基準日（最過去日を指定する）
+  # period：複数日の学習予定を返す場合は、指定する
+  # #####################################
+  def return_studyplans(basedate, period = 1)
 
-  def end_week_basedate(basedate)
-      end_date = basedate + 3.days
-      end_date.change(hour: 23, min: 59)
+    period = period - 1
+    start = basedate.change(hour: 0)
+    to = basedate.change(hour: 23, min: 59)
+
+    if period > 0 then
+        to = to + period.days
+    end
+    result = self.studyplans.where(
+        start_daytime: (start + 9.hours)..(to + 9.hours))
   end
-
 
 end

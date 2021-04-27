@@ -4,47 +4,98 @@ class ApplicationController < ActionController::Base
 
 
 
-    protected
+    # #####################################
+    # 全学習予定から、「完了済」or「未完了」のデータを取り出す 
+    # #######################
+    # studyplans：対象の学習予定
+    # select_done_flag：取り出したい「done_flag」の値
+    # #####################################
+    def extract_studyplans_done_notyet(studyplans, select_done_flag)
 
-    def configure_permitted_parameters
-        added_attrs = [ :email, :username, :password, :password_confirmation ]
-        devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
-        devise_parameter_sanitizer.permit :account_update, keys: added_attrs
-        devise_parameter_sanitizer.permit :sign_in, keys: added_attrs
-    end
-    def set_current_user
-        @user = current_user
-    end
+        return_date = []
+        if studyplans == nil || studyplans.count == 0 then
+            return return_date
+        end
 
-
-
-
-    def week_aggregates_sum(select_flag,studyplans)
-    
-        difference_timea = 0
-        
-        if select_flag == false then
-            # 全て抽出
-            studyplans.each do |studyplan|
-                difference_timea = difference_timea + (studyplan.end_daytime - studyplan.start_daytime)
-            end
-        else
-            studyplans.each do |studyplan|
-                # 完了済のみ抽出
-                if studyplan.done_flag == true then
-                    difference_timea = difference_timea + (studyplan.end_daytime - studyplan.start_daytime)
-                end
+        studyplans.each do |studyplan|
+            if studyplan.done_flag == select_done_flag then
+                return_date << studyplan
             end
         end
+        return return_date
+    end
+
+    # #####################################
+    # 指定期間の日付を「mm/dd(w)」に変換（Studyplan.format_change_datetime_mdの拡張版）
+    # #####################################
+    def multipledays_format_change_datetime_md(basedate, period_days)
+        result = []
+        for i in 1..period_days do
+            result << Studyplan.format_change_datetime_md(basedate + (i - 1).days)
+        end
+        return result
+    end
+
+
+    # #####################################
+    # 指定期間の勉強時間（分）を取得
+    # #####################################
+    def multipledays_studyhours_min(studyplans, basedate, period_days)
         
-        difference_timea
+        if studyplans == nil || studyplans.count == 0 then
+            return 0
+        end
+
+        result = []
+        start = basedate.change(hour: 0)
+        to = basedate.change(hour: 23, min: 59)
+
+        for i in 1..period_days do
+
+            sum = 0
+            studyplans.each do |buf|
+                if start <= buf.start_daytime && buf.start_daytime <= to then
+                    sum = sum + (buf.daytime_difference() / 60).to_i
+                end
+            end
+
+            result << sum
+            start = start + 1.days
+            to = to + 1.days
+
+        end
+
+        return result
 
     end
 
+
+    # #####################################
+    # 勉強時間の合算（秒）を取得
+    # #####################################
+    def sum_studyhours_int(studyplans)
+        
+        if studyplans == nil || studyplans.count == 0 then
+            return 0
+        else
+            sum = 0
+            studyplans.each do |buf|
+                # debugger
+                # sum = sum + ((buf.end_daytime - buf.start_daytime)/ 60.0).to_i
+                sum = sum + buf.daytime_difference()
+            end
+            return sum
+        end
+        
+    end
+
+
+    # #####################################
+    # 「秒」→「hh:mm」に変換
+    # #####################################
     def time_conversion_hhmm(target)
         hour = target / 3600.0
         surplus = target % 3600.0
-        # debugger
 
         if surplus == 0.0 then
             "#{hour.to_i}:00"
@@ -64,70 +115,17 @@ class ApplicationController < ActionController::Base
         end
     end
 
-
-
-    # 基準日を含む1週間の時間を取得
-    def week_aggregates(basedate,select_flag)
-        startdate = start_week_basedate(basedate) 
-        result = [ 
-            extract_aggregates(startdate, select_flag),
-            extract_aggregates(startdate.since(1.days), select_flag),
-            extract_aggregates(startdate.since(2.days), select_flag),
-            extract_aggregates(startdate.since(3.days), select_flag),
-            extract_aggregates(startdate.since(4.days), select_flag),
-            extract_aggregates(startdate.since(5.days), select_flag),
-            extract_aggregates(startdate.since(6.days), select_flag)
-        ]
+    # メールアドレスでもログイン出来るようにする。
+    def configure_permitted_parameters
+        added_attrs = [ :email, :username, :password, :password_confirmation ]
+        devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
+        devise_parameter_sanitizer.permit :account_update, keys: added_attrs
+        devise_parameter_sanitizer.permit :sign_in, keys: added_attrs
     end
 
-        # 開始日時・終了日時（Timeクラスの値）を「mm/dd(w)」に変換
-        def extract_aggregates(target_date,select_flag)
-
-            start = target_date.change(hour: 0)
-            to = target_date.change(hour: 23, min: 59)
-            # debugger
-            result = @user.studyplans.where(
-            start_daytime: (start + 9.hours)..(to + 9.hours),
-            done_flag: select_flag)
-            
-            if result.count == 0 then
-                return 0
-            else
-                sum = 0
-                result.each do |studyplans|
-                    sum = sum + ((studyplans.end_daytime - studyplans.start_daytime)/ 60.0).to_i
-                end
-                
-                return sum
-            end
-            
-        end
-
-    # 基準日を含む1週間の日付ラベル
-    def week_datetime_label(basedate)
-        startdate = start_week_basedate(basedate) 
-        result = [ 
-            format_change_datetime_md(startdate),
-            format_change_datetime_md(startdate.since(1.days)),
-            format_change_datetime_md(startdate.since(2.days)),
-            format_change_datetime_md(startdate.since(3.days)),
-            format_change_datetime_md(startdate.since(4.days)),
-            format_change_datetime_md(startdate.since(5.days)),
-            format_change_datetime_md(startdate.since(6.days))
-        ]
+    # ユーザーをセット
+    def set_current_user
+        @user = current_user
     end
-
-        # 開始日時・終了日時（Timeクラスの値）を「mm/dd(w)」に変換
-        def format_change_datetime_md(target)
-            weeks = ["月","火","水","木","金","土","日"]
-            index = target.strftime("%u").to_i
-            target.strftime("%m/%d(#{weeks[index - 1]})")
-        end
-
-# 3日前の日にちを返す
-def start_week_basedate(basedate)
-    start_date = basedate - 3.days
-    start_date.change(hour: 0)
-end
 
 end

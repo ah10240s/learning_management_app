@@ -100,7 +100,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @all_date_time %></strong></h4>
+                                        <h4><strong><%= @all_sum_studyhours_week %></strong></h4>
                                         <p>予定時間</p>
                                     </div>
                                     <div class="icon">
@@ -113,7 +113,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @done_date_time %></strong></h4>
+                                        <h4><strong><%= @done_sum_studyhours_week %></strong></h4>
                                         <p>実施時間</p>
                                     </div>
                                     <div class="icon">
@@ -179,10 +179,10 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: <%== @array %>,
+            labels: <%== @datatables_ylabels %>,
             datasets: [{
                 label: '# 合計時間',
-                data: <%== @date %>,
+                data: <%== @all_week_studyhours %>,
                 backgroundColor: 'rgba(40,124,250,0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -234,8 +234,8 @@
 </script>
 
 
-<%= javascript_pack_tag 'subjects/index' %>
-<%= stylesheet_pack_tag 'subjects/index' %>
+<%= javascript_pack_tag 'datatables/index' %>
+<%= stylesheet_pack_tag 'datatables/index' %>
 
 <!-- テーブル -->
 <section class="content">
@@ -245,7 +245,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="users_example" class="table table-bordered table-hover">
+                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 
@@ -259,8 +259,7 @@
                             </thead>
                         
                             <tbody>
-                            <% @studyplans.each do |studyplan| %>
-                                <% @studyplan = studyplan %>
+                            <% @studyplans_week.each do |studyplan| %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
                                 <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
@@ -271,9 +270,9 @@
                                         未完了
                                     <% end %>
                                 </td>
-                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
-                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
-                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.start_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.daytime_difference_hhmm() %></td>
                                 </td>
 
                                 <td>

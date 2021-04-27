@@ -1,6 +1,6 @@
 
-<%= javascript_pack_tag 'subjects/index' %>
-<%= stylesheet_pack_tag 'subjects/index' %>
+<%= javascript_pack_tag 'datatables/index' %>
+<%= stylesheet_pack_tag 'datatables/index' %>
 
 
 <% provide(:title, "ホーム") %>
@@ -34,7 +34,7 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table id="users_example" class="table table-bordered table-hover table-head-fixed">
+                        <table id="dashboard_studyplan" class="table table-bordered table-hover table-head-fixed">
                             <thead>
                             <tr>
                                 
@@ -48,7 +48,7 @@
                             </thead>
                         
                             <tbody>
-                            <% @studyplans.each do |studyplan| %>
+                            <% @all_studyplans_byday.each do |studyplan| %>
                                 <% @studyplan = studyplan %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
@@ -60,9 +60,9 @@
                                         未完了
                                     <% end %>
                                 </td>
-                                <td><%= format_change_datetime(studyplan.start_daytime) %></td>
-                                <td><%= format_change_datetime(studyplan.end_daytime) %></td>
-                                <td><%= studyplan.time_difference(studyplan.start_daytime,studyplan.end_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.start_daytime) %></td>
+                                <td><%= Studyplan.format_change_datetime_full(studyplan.end_daytime) %></td>
+                                <td><%= studyplan.daytime_difference_hhmm() %></td>
                                 </td>
 
                                 <td>
@@ -93,7 +93,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="users_example2" class="table table-bordered table-hover table-head-fixed">
+                            <table id="dashboard_subject" class="table table-bordered table-hover table-head-fixed">
                                 <thead>
                                 <tr>
                                     <th>科目名</th>
@@ -142,7 +142,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @all_date_time %></strong></h4>
+                                        <h4><strong><%= @all_sum_studyhours_week %></strong></h4>
                                         <p>予定時間</p>
                                     </div>
                                     <div class="icon">
@@ -155,7 +155,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @done_date_time %></strong></h4>
+                                        <h4><strong><%= @done_sum_studyhours_week %></strong></h4>
                                         <p>実施時間</p>
                                     </div>
                                     <div class="icon">
@@ -219,16 +219,16 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: <%== @array %>,
+            labels: <%== @datatables_ylabels %>,
             datasets: [{
                 label: '# 予定時間',
-                data: <%== @date_all %>,
+                data: <%== @all_week_studyhours %>,
                 backgroundColor: 'rgba(40,124,250,0.5)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             },{
                 label: '# 実施時間',
-                data: <%== @date_done %>,
+                data: <%== @done_week_studyhours %>,
                 backgroundColor: 'rgba(219,39,91,0.5)',
                 borderColor: 'rgba(219,39,91,1)',
                 borderWidth: 1
