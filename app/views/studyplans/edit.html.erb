@@ -39,6 +39,16 @@
                                 <%= f.datetime_field :end_daytime, class:"form-control", value: @studyplan.end_daytime.strftime('%Y-%m-%dT%H:%M') %>
                             </div>
 
+                            <div class="form-group">
+                                <%= f.label :学習状況 %><br />
+                                <% if @studyplan.done_flag == true then %>
+                                    <%= f.select :done_flag, {未完了: false, 完了: true}, {}, class:"form-control" %>
+                                <% else %>
+                                    <%= f.select :done_flag, {完了: true, 未完了: false}, {}, class:"form-control" %>
+                                <% end %>
+                            </div>
+
+
                         </div>
                         <!-- /.card-body -->
 

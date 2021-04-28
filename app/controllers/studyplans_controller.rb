@@ -7,6 +7,10 @@ class StudyplansController < ApplicationController
     # 科目一覧ページへ
     def index
         @studyplans = @user.studyplans
+        @oSearch_word = ""
+        if params[:oSearch] == "true" then
+            @oSearch_word = Studyplan.format_change_datetime_ymd(Time.now)
+        end
     end
 
     # GET: /studyplans/:id

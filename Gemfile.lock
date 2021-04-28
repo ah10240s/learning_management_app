@@ -91,7 +91,11 @@ GEM
     factory_bot_rails (4.10.0)
       factory_bot (~> 4.10.0)
       railties (>= 3.0.0)
+    faker (2.17.0)
+      i18n (>= 1.6, < 2)
     ffi (1.15.0)
+    gimei (1.0.0)
+      romaji
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.10)
@@ -166,6 +170,8 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    romaji (0.2.4)
+      rake (>= 0.8.0)
     rspec-core (3.6.0)
       rspec-support (~> 3.6.0)
     rspec-expectations (3.6.0)
@@ -253,6 +259,8 @@ DEPENDENCIES
   devise-i18n
   devise-i18n-views
   factory_bot_rails (~> 4.10.0)
+  faker
+  gimei
   jbuilder (~> 2.7)
   launchy (~> 2.4.3)
   listen (~> 3.2)

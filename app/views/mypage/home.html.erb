@@ -2,9 +2,7 @@
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
 
-
 <% provide(:title, "ホーム") %>
-<p id="notice"><%= notice %></p>
 
 <!-- 上部 -->
 <section class="content-header">
@@ -17,8 +15,6 @@
     </div><!-- /.container-fluid -->
 </section>
 
-
-
 <!-- テーブル -->
 <section class="content">
     <div class="container-fluid">
@@ -28,7 +24,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h5 class="card-title"><strong>本日の学習予定</strong></h5>
-                            <%= link_to "詳細", studyplans_path, method: :get %>
+                            <%= link_to "詳細", studyplans_path(oSearch: true), method: :get %>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -79,8 +75,6 @@
             </div>
             <!-- /.col -->
 
-
-
     <!-- /style="min-height: 300px; height: 500px; max-height: 700px; max-width: 100%;"> -->
             
                 <div class="col-md-4">
@@ -120,6 +114,8 @@
                 <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        
 
         <div class="row">
             <div class="col-md-12">
@@ -183,9 +179,12 @@
             </div>
         </div>
 
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 
-<%= javascript_pack_tag 'chartjs/index' %>
-<%= stylesheet_pack_tag 'chartjs/index' %>
+
 
 <script>
     function formatTime_jp(secs){
@@ -279,9 +278,5 @@
     });
 </script>
 
-    </div>
-    <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
 
 

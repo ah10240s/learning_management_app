@@ -1,5 +1,4 @@
 <% provide(:title, "学習予定一覧") %>
-<p id="notice"><%= notice %></p>
 
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
@@ -24,7 +23,7 @@
                 <div class="card">
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
+                        <table id="top_one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>科目名</th>
@@ -79,3 +78,36 @@
 </section>
 <!-- /.content -->
 
+<script>
+var ja_DataTable = {
+                "sProcessing":   "処理中...",
+                "sLengthMenu":   "_MENU_ 件表示",
+                "sZeroRecords":  "データはありません。",
+                "sInfo":         " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                "sInfoEmpty":    " 0 件中 0 から 0 まで表示",
+                "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                "sInfoPostFix":  "",
+                "sSearch":       "検索:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "先頭",
+                    "sPrevious": "前",
+                    "sNext":     "次",
+                    "sLast":     "最終"
+                }
+            };
+            
+$(function() {
+    $('#top_one_perpage_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable,
+        "oSearch": {"sSearch": "<%= @oSearch_word %>"}
+    });
+});
+</script>

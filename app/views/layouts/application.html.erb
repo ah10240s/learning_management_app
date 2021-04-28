@@ -12,15 +12,21 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <%= javascript_pack_tag 'chartjs/index' %>
+    <%= stylesheet_pack_tag 'chartjs/index' %>
+
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    
+
   </head>
 
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed control-sidebar-slide-open layout-navbar-fixed">
+  
   <div class="wrapper">
 
     <%= render 'shared/header' %>
