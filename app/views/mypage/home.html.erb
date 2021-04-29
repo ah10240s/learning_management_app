@@ -20,12 +20,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
-                <div class="card table-responsive p-0" style="max-height: 500px;">
+                <div class="card card-primary" style="max-height: 500px;">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title"><strong>本日の学習予定</strong></h5>
-                            <%= link_to "詳細", studyplans_path(oSearch: true), method: :get %>
+                        <!-- <div class="d-flex justify-content-between "> -->
+                        <h5 class="card-title">本日の学習予定</h5>
+                        <div class="card-tools">
+                            <%= link_to "詳細", studyplans_path(oSearch: true), method: :get, class: "btn-tool" %>
                         </div>
+                        <!-- </div> -->
                     </div>
                     <!-- /.card-header -->
 
@@ -35,7 +37,7 @@
                             <tr>
                                 
                                 <th>科目名</th>
-                                <th>完了</th>
+                                <th>学習状況</th>
                                 <th>開始時間</th>
                                 <th>終了時間</th>
                                 <th>勉強時間</th>
@@ -78,11 +80,11 @@
     <!-- /style="min-height: 300px; height: 500px; max-height: 700px; max-width: 100%;"> -->
             
                 <div class="col-md-4">
-                    <div class="card table-responsive p-0" style="max-height: 500px;">
+                    <div class="card table-responsive p-0  card-primary" style="max-height: 500px;">
                         <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="card-title"><strong>科目一覧</strong></h5>
-                                <%= link_to "詳細", subjects_path, method: :get %>
+                            <h5 class="card-title">科目一覧</h5>
+                            <div class="card-tools">
+                                <%= link_to "詳細", subjects_path, method: :get, class: "btn-tool" %>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -119,11 +121,11 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h5 class="card-title"><strong>週間学習実績</strong></h5>
-                            <%= link_to "詳細", aggregates_path, method: :get %>
+                        <h5 class="card-title">週間学習実績</h5>
+                        <div class="card-tools">
+                            <%= link_to "詳細", aggregates_path, method: :get, class: "btn-tool" %>
                         </div>
                     </div>
                     <!-- /.card-header -->

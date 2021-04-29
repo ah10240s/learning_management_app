@@ -7,6 +7,7 @@ ja:
         id: 科目ID
         subject_name: 科目名
         user_id: ユーザーID
+
     models:
       studyplan: 学習予定
     attributes:
@@ -19,4 +20,12 @@ ja:
         end_daytime: 終了日時
         done_flag: 完了ステータス
 
+      models:
+        user: ユーザー
+      attributes:
+        user:
+          id: ユーザーID
+          email: メールアドレス
+          username: ユーザー名
+          encrypted_password: ハッシュ済パスワード
 

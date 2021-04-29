@@ -19,7 +19,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-10 offset-md-1">
-                <div class="card">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">週間学習実績</h3>
+                    </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="row fc">
@@ -181,8 +184,13 @@
             datasets: [{
                 label: '# 合計時間',
                 data: <%== @all_week_studyhours %>,
-                backgroundColor: 'rgba(40,124,250,0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                <% if @select_done_flag == true then %>
+                    backgroundColor: 'rgba(219,39,91,0.5)',
+                    borderColor: 'rgba(219,39,91,1)',
+                <% else %>
+                    backgroundColor: 'rgba(40,124,250,0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                <% end %>
                 borderWidth: 1
             }]
         },
@@ -240,7 +248,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">学習予定</h3>
+                    </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="one_perpage_datatable" class="table table-bordered table-hover">
@@ -248,7 +259,7 @@
                             <tr>
                                 
                                 <th>科目名</th>
-                                <th>完了</th>
+                                <th>学習状況</th>
                                 <th>開始時間</th>
                                 <th>終了時間</th>
                                 <th>勉強時間</th>
