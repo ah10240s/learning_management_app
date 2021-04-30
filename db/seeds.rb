@@ -33,11 +33,11 @@ i = 1
 subjects_sumple.each do |subject|
     Subject.create!(
         subject_name: subject,
-        user_id: 1,
+        user_id: 1
     )
     Subject.create!(
         subject_name: subject,
-        user_id: 2,
+        user_id: 2
     )
     i = i + 1
 end

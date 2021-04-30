@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_092409) do
+ActiveRecord::Schema.define(version: 2021_04_30_045718) do
+
+  create_table "membership_subject_groups", force: :cascade do |t|
+    t.integer "subject_id", null: false
+    t.integer "subject_group_id", null: false
+    t.datetime "joined_at"
+    t.datetime "withdrawn_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subject_group_id"], name: "index_membership_subject_groups_on_subject_group_id"
+    t.index ["subject_id"], name: "index_membership_subject_groups_on_subject_id"
+  end
 
   create_table "studyplans", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -22,6 +33,14 @@ ActiveRecord::Schema.define(version: 2021_04_15_092409) do
     t.datetime "end_daytime", null: false
     t.index ["subject_id"], name: "index_studyplans_on_subject_id"
     t.index ["user_id"], name: "index_studyplans_on_user_id"
+  end
+
+  create_table "subject_groups", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_subject_groups_on_user_id"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -45,7 +64,10 @@ ActiveRecord::Schema.define(version: 2021_04_15_092409) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "membership_subject_groups", "subject_groups"
+  add_foreign_key "membership_subject_groups", "subjects"
   add_foreign_key "studyplans", "subjects"
   add_foreign_key "studyplans", "users"
+  add_foreign_key "subject_groups", "users"
   add_foreign_key "subjects", "users"
 end

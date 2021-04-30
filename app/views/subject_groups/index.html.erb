@@ -1,4 +1,4 @@
-<% provide(:title, "科目一覧") %>
+<% provide(:title, "参加グループ一覧") %>
 
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1>科目一覧</h1>
+            <h1>参加グループ一覧</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -20,24 +20,35 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">科目一覧</h3>
+                        <h3 class="card-title">参加グループ一覧</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>科目名</th>
-                                <th>参加グループ</th>
+                                <th>参加グループ名</th>
+                                <th>科目</th>
+                                <th>参加人数</th>
+                                <th>参加ステータス</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                         
                             <tbody>
-                            <% @subjects.each do |subject| %>
+                            <% @subjecs.each do |subject| %>
+                            <% subject_group = subject.joining_subject_group %>
                                 <tr>
-                                <td><%= subject.subject_name %>-<%= subject.id %>-<%= subject.user_id %></td>
-                                <td><%= join_subject_group_name(subject) %></td>
+                                <td><%= subject_group.name %></td>
+                                <td><%= subject.subject_name %></td>
+                                <td><%= subject_group.subject_groups_joining_users.count %></td>
+                                <td>
+                                    <% if subject_group.subject_groups_create_judge(@user) then %>
+                                        <%= "作成者" %>
+                                    <% else %>
+                                        <%= "参加者" %>
+                                    <% end %>
+                                </td>
                                 <td>
                                     <%= link_to '科目名編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
                                     <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %>

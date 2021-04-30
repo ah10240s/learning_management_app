@@ -1,43 +1,44 @@
-<% provide(:title, "学習予定登録") %>
+<% provide(:title, "グループ作成") %>
 <!-- Main content -->
 
 <section class="content-header">
 
 </section>
 
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <!-- left column -->
             <div class="col-md-8 offset-md-2">
-                <%= render 'shared/error_messages', object: @studyplan %>
+                <%= render 'shared/error_messages', object: @subject_group %>
+                
+                <%= render 'shared/error_messages', object: @membership_subject_group %>
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">学習予定登録</h3>
+                        <h3 class="card-title">グループ作成</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <%= form_with(model: @studyplan, local: true) do |f| %>
+                    <%= form_with(model: @subject_group, local: true) do |f| %>
 
                         <%= f.hidden_field :user_id, :value => @user.id %>
 
                         <div class="card-body">
                             <div class="form-group">
                                 <%= f.label :科目 %><br />
-                                <%= f.collection_select :subject_id, @subjects.all, :id, :subject_name, {prompt: "選ぶ"}, {class: "form-control"} %>
+                                <% if @subjects.count == 0 then %>
+                                    <%= f.collection_select :subject_id, @subjects, :id, :subject_name, {prompt: "※グループ登録来る科目がありません"}, {class: "form-control"} %>
+                                <% else %>
+                                    <%= f.collection_select :subject_id, @subjects, :id, :subject_name, {prompt: "選ぶ"}, {class: "form-control"} %>
+                                <% end %>
                             </div>
 
                             <div class="form-group">
-                                <%= f.label :開始日時 %><br />
-                                <%= f.datetime_field :start_daytime, class:"form-control" %>
+                                <%= f.label :グループ名 %><br />
+                                <%= f.text_field :name, class:"form-control" %>
                             </div>
-
-                            <div class="form-group">
-                                <%= f.label :終了日時 %><br />
-                                <%= f.datetime_field :end_daytime, class:"form-control" %>
-                            </div>
-
                         </div>
                         <!-- /.card-body -->
 
@@ -52,7 +53,6 @@
     </div>
 
 </section>
-
 
 
 

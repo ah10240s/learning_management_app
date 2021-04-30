@@ -1,8 +1,10 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  has_many :subjects
+  has_many :subjects, dependent: :destroy
   has_many :studyplans, dependent: :destroy
+
+  has_many :subject_groups, dependent: :destroy
 
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :validatable
@@ -24,6 +26,49 @@ class User < ApplicationRecord
     #   false
     # end
 
+
+  # #####################################
+  # グループに参加中の科目一覧を返却
+  # #####################################
+  def joining_subject_group_subjects
+    subjects = self.subjects
+    return_date = []
+    subjects.each do |subject|
+      if subject.joining_subject_group_judge then
+        return_date << subject
+      end
+    end
+    return return_date
+  end
+
+
+  # #####################################
+  # グループに参加していない科目一覧を返却
+  # #####################################
+  def not_joining_subject_group_subjects
+    subjects = self.subjects
+    return_date = []
+    subjects.each do |subject|
+      if subject.joining_subject_group_judge == false then
+        return_date << subject
+      end
+    end
+    return return_date
+  end
+
+  # #####################################
+  # 参加している科目グループ一覧を返却
+  # #####################################
+  def joining_subject_groups
+    subjects = self.subjects
+    return_date = []
+    subjects.each do |subject|
+      if subject.joining_subject_group_judge then
+        return_date << subject.joining_subject_group
+      end
+    end
+    return return_date
+  end
 
 
   # #####################################

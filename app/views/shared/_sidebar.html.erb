@@ -66,14 +66,27 @@
                         <p>学習実績</p>
                     <% end %>
                 </li>
-                <!--
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fa fa-users"></i>
-                        <p>所属チーム一覧</p>
+                        <p>参加グループ</p>
+                        <i class="fas fa-angle-left right"></i>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <%= link_to  subject_groups_path, method: :get, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>一覧</p>
+                            <% end %>
+                        </li>
+                        <li class="nav-item">
+                            <%= link_to  new_subject_group_path, method: :get, class: 'nav-link' do %>
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>作成</p>
+                            <% end %>
+                        </li>
+                    </ul>
                 </li>
-                -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>

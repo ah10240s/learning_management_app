@@ -21,8 +21,8 @@ Rails.application.routes.draw do
 
   get  '/aggregates/index_ajax',  to: 'aggregates#index_ajax', as: 'index_ajax_aggregates'
   resources :aggregates
-
-
+  resources :subject_groups
+ 
 
   devise_for :users, :controllers => {
     sessions: 'users/sessions',
