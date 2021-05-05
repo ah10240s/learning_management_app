@@ -1,6 +1,8 @@
 
+<!-- 
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
+-->
 
 <% provide(:title, "ホーム") %>
 
@@ -10,6 +12,11 @@
         <div class="row mb-2">
             <div class="col-sm-6">
             <h1>ダッシュボード</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">ホーム</li>
+                </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -32,7 +39,7 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table id="dashboard_studyplan" class="table table-bordered table-hover table-head-fixed">
+                        <table class="table table-bordered table-hover table-head-fixed dashboard_datatable">
                             <thead>
                             <tr>
                                 
@@ -89,7 +96,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="dashboard_subject" class="table table-bordered table-hover table-head-fixed">
+                            <table class="table table-bordered table-hover table-head-fixed dashboard_datatable">
                                 <thead>
                                 <tr>
                                     <th>科目名</th>

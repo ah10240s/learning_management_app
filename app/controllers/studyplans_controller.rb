@@ -22,7 +22,7 @@ class StudyplansController < ApplicationController
     # GET: /studyplans/new
     # 学習予定追加ぺーじへ
     def new
-        @subjects = @user.subjects
+        @subjects = @user.notinvite_subjects
         @studyplan = Studyplan.new
     end
 
@@ -30,7 +30,7 @@ class StudyplansController < ApplicationController
     # 科目追加処理
     def create
         @studyplan = Studyplan.new(studyplans_params)
-        @subjects = @user.subjects
+        @subjects = @user.notinvite_subjects
         if @studyplan.save
             flash[:success] = "科目を追加しました。" #（success、info、warning、danger）
             redirect_to studyplans_path

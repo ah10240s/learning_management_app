@@ -7,7 +7,7 @@ class SubjectsController < ApplicationController
   # GET: /subjects
   # 科目一覧ページへ
   def index
-    @subjects = @user.subjects
+    @subjects = @user.notinvite_subjects
   end
 
   # GET: /subjects/:id

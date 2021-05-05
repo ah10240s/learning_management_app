@@ -1,0 +1,124 @@
+<% provide(:title, "グループ作成") %>
+<!-- Main content -->
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>グループ一覧</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
+                    <li class="breadcrumb-item"><%= link_to "グループ一覧", subject_groups_path %></li>
+                    <li class="breadcrumb-item active">グループ詳細</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<style>
+    .callout.callout-primary {
+        border-left-color: #0070e7;
+    }
+
+    .callout.callout-waring {
+        border-left-color: #ffc107;
+    }
+
+    .callout a {
+        color: #dc3545;
+        text-decoration: none;
+    }
+</style>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-8 offset-md-2">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">グループ作成</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="callout callout-primary">
+                            <h5><strong>グループ名</strong></h5>
+
+                            <p><%= @subject_group.name %></p>
+                        </div>
+                        <div class="callout callout-primary">
+                            <h5><strong>科目名</strong></h5>
+                            <p><%= @subject.subject_name %></p>
+                        </div>
+                        <div class="callout callout-primary">
+                            <h5><strong>参加メンバー</strong></h5>
+                            <h6>【作成者】</h6>
+                            <ul>
+                                <li><%= @create_user.username %></li>
+                            </ul>
+                            <h6>【参加者】</h6>
+                            <ul>
+                                <% if @join_users then %> 
+                                    <% @join_users.each do |buf| %>
+                                        <li><%= buf.username %></li>
+                                    <% end %>
+                                <% end %>
+                            </ul>
+                        </div>
+
+                        
+                        <div class="callout callout-waring">
+                            <h5><strong>招待中メンバー</strong></h5>
+                            <div class="card-body p-0">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if @invite_users then %> 
+                                            <% @invite_users.each do |buf| %>
+                                                <tr>
+                                                    <td><%= buf.username %></td>
+                                                    <td>
+                                                        <% if @subject_group.subject_groups_create_judge(@user) then %>
+                                                            <%= link_to '招待を取り消す', invitation_path(id: @subject_group.id, user_id: buf.id), method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '招待を取り消します。本当によろしいでしょうか？' } %>
+                                                        <% end %>
+                                                    </td>
+                                                </tr>
+                                            <% end %>
+                                        <% end %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <% if @user.check_access_join_subject_group(@subject_group) then %>
+                            <%= link_to 'メンバーの実績を集計する', group_aggregates_path(id: @subject_group.id), class:"btn btn-block btn-outline-primary" %>
+                            <% if @subject_group.subject_groups_create_judge(@user) then %>
+                                <%= link_to 'グループ名を編集する', edit_subject_group_path(@subject_group), class:"btn btn-block btn-outline-primary" %>
+                                <%= link_to 'メンバーを招待する', new_invitation_path(subject_group_id: @subject_group.id), class:"btn btn-block btn-outline-primary" %>
+                                <%= link_to 'グループを削除する', subject_group_path(@subject_group), method: :delete, class:"btn btn-block btn-outline-danger", data: { confirm: 'グループに削除します。本当によろしいですか？' } %>
+                            <% end %>
+                        <% end %>
+
+                        <% if @user.check_access_invite_subject_group(@subject_group) then %>
+                            <%= link_to '参加する', invitation_path(id: @subject_group.id, user_id: @user.id), method: :patch, class:"btn btn-block btn-outline-primary", data: { confirm: 'グループに参加します。本当によろしいですか？' } %>
+                            <%= link_to '拒否する', invitation_path(id: @subject_group.id, user_id: @user.id), method: :delete, class:"btn btn-block btn-outline-danger", data: { confirm: '招待を拒否します。本当によろしいですか？' } %>
+                        <% end %>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

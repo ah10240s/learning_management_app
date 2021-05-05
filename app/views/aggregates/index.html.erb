@@ -5,7 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1>[集計]週間学習実績</h1>
+                <h1>[集計]週間学習実績</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
+                    <li class="breadcrumb-item active">[集計]週間学習実績</li>
+                </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -52,7 +58,7 @@
                                 <div class="fc-toolbar-chunk">
                                     <!-- <div class="ml-auto"> -->
                                     <ul class="nav nav-pills">
-                                        <% if @select_done_flag == true then %>
+                                        <% if @select_done_flag == "true" then %>
                                             <li class="nav-item">
                                             <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
                                                                             flag: true, 
@@ -239,10 +245,10 @@
     });
 </script>
 
-
+<!-- 
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
-
+ -->
 <!-- テーブル -->
 <section class="content">
     <div class="container-fluid">

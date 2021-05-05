@@ -1,0 +1,72 @@
+<% provide(:title, "招待可否設定") %>
+<!-- Main content -->
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>招待可否設定</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
+                    <li class="breadcrumb-item active">学習予定編集</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-8 offset-md-2">
+                <%= render 'shared/error_messages', object: @user %>
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">招待可否設定</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <%= form_with(model: @user, url: {controller: 'invitations', action: 'user_update' }, local: true) do |f| %>
+
+                        <%= f.hidden_field :id, :value => @user.id %>
+
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <%= f.label :招待用ID（変更不可） %><br />
+                                <%= f.text_field :invite_user_id, class:"form-control", value: @user.invite_user_id, disabled: true %>
+                            </div>
+
+                            <div class="form-group">
+                                <%= f.label :招待可否 %><br />
+                                <% if @user.invite_possible_flag == true then %>
+                                    <%= f.select :invite_possible_flag, {招待可: true, 招待不可: false}, {}, class:"form-control" %>
+                                    <em>※現在の設定は「招待可」に設定されています。</em>
+                                <% else %>
+                                    <%= f.select :invite_possible_flag, {招待不可: false, 招待可: true}, {}, class:"form-control" %>
+                                    <em>※現在の設定は「招待不可」に設定されています。</em>
+                                <% end %>
+                            </div>
+
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <%= f.submit "更新する", class:"btn btn-primary" %>
+                        </div>
+                    <% end %>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

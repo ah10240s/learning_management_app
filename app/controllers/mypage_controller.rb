@@ -10,7 +10,7 @@ class MypageController < ApplicationController
 
         @select_basedate = (Time.now) - 3.days
         @all_studyplans_byday = @user.byday_studyplans(Time.now)
-        @subjects = @user.subjects
+        @subjects = @user.notinvite_subjects
 
         all_studyplans_week = @user.week_studyplans(@select_basedate)
         done_studyplans_week = extract_studyplans_done_notyet(all_studyplans_week, true)

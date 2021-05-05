@@ -3,7 +3,7 @@ class AggregatesController < ApplicationController
     before_action :set_current_user
 
     # GET: /aggregates
-    # 科目一覧ページへ
+    # 学習実績ページへ
     def index
         # 
         if params[:flag] then
@@ -43,6 +43,7 @@ class AggregatesController < ApplicationController
         else
             @achievement_rate = 0.0
         end
+
 
     end
 

@@ -9,8 +9,27 @@ class Subject < ApplicationRecord
             presence: true
 
 
+
   # #####################################
-  # その科目が参加中の科目グループがあるか判定
+  # その科目が「招待中」の科目グループがあるか判定
+  # #####################################
+  def invit_subject_group_judge
+    # グループテーブルに対象の科目が存在するか確認
+    
+    subject_groupmember_ships = self.membership_subject_groups
+    if subject_groupmember_ships == nil || subject_groupmember_ships.count == 0 then
+      return false
+    end
+
+    latest_subject_groupmember_ship = subject_groupmember_ships.order(id: :DESC).first
+
+    return latest_subject_groupmember_ship.membership_subject_group_invit
+
+  end
+
+  
+  # #####################################
+  # その科目が「参加中」の科目グループがあるか判定
   # #####################################
   def joining_subject_group_judge
     # グループテーブルに対象の科目が存在するか確認

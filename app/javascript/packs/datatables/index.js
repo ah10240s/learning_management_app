@@ -1,7 +1,7 @@
 
-require('datatables.net');
+//require('datatables.net');
 require('datatables.net-bs4');
-require('datatables.net-responsive');
+//require('datatables.net-responsive');
 require('datatables.net-responsive-bs4');
 
 require('datatables.net-buttons-bs4');
@@ -27,6 +27,36 @@ var ja_DataTable = {
                     "sLast":     "最終"
                 }
             };
+
+
+$(function() {
+    $('.normal_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
+
+
+$(function() {
+    $('.dashboard_datatable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
+
+
 
 $(function() {
     $('#one_perpage_datatable').DataTable({
@@ -59,6 +89,19 @@ $(function() {
         "paging": true,
         "lengthChange": false,
         "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
+
+$(function() {
+    $('#two_perpage_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
         "ordering": true,
         "info": true,
         "autoWidth": false,

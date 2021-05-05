@@ -1,55 +1,47 @@
-<% provide(:title, "学習予定登録") %>
+<% provide(:title, "招待") %>
 <!-- Main content -->
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>学習予定登録</h1>
+                <h1>招待</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
-                    <li class="breadcrumb-item active">学習予定登録</li>
+                    <li class="breadcrumb-item"><%= link_to "グループ一覧", subject_groups_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "グループ詳細", subject_group_path(@subject_group.id) %></li>
+                    <li class="breadcrumb-item active">招待</li>
                 </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
 
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
             <!-- left column -->
             <div class="col-md-8 offset-md-2">
-                <%= render 'shared/error_messages', object: @studyplan %>
+
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">学習予定登録</h3>
+                        <h3 class="card-title">招待</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <%= form_with(model: @studyplan, local: true) do |f| %>
-
-                        <%= f.hidden_field :user_id, :value => @user.id %>
+                    <%= form_with(url: {controller: 'invitations', action: 'create' }, local: true) do |f| %>
+                        <%= f.hidden_field :subject_name, :value => @subject_group.subject_groups_createuser_subject(@user).subject_name %>
+                        <%= f.hidden_field :subject_group_id, :value => @subject_group.id %>
 
                         <div class="card-body">
                             <div class="form-group">
-                                <%= f.label :科目 %><br />
-                                <%= f.collection_select :subject_id, @subjects, :id, :subject_name, {prompt: "選ぶ"}, {class: "form-control"} %>
+                                <%= f.label :ユーザー共有ID %><br />
+                                <%= f.text_field :invite_user_id, class:"form-control" %>
                             </div>
-
-                            <div class="form-group">
-                                <%= f.label :開始日時 %><br />
-                                <%= f.datetime_field :start_daytime, class:"form-control" %>
-                            </div>
-
-                            <div class="form-group">
-                                <%= f.label :終了日時 %><br />
-                                <%= f.datetime_field :end_daytime, class:"form-control" %>
-                            </div>
-
                         </div>
                         <!-- /.card-body -->
 
@@ -64,7 +56,6 @@
     </div>
 
 </section>
-
 
 
 

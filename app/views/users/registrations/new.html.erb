@@ -9,7 +9,9 @@
     <div class="card-body register-card-body">
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        
+
+        <%= f.hidden_field :invite_user_id, :value => SecureRandom.urlsafe_base64 %>
+
         <%= f.label :username %><br />
         <div class="input-group mb-3">
           <%= f.text_field :username, autofocus: true, autocomplete: "username", class: 'form-control' %>

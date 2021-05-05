@@ -1,0 +1,245 @@
+<% provide(:title, "[集計]グループメンバー学習実績") %>
+
+<!-- 上部 -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>招待</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
+                    <li class="breadcrumb-item"><%= link_to "グループ一覧", subject_groups_path %></li>
+                    <li class="breadcrumb-item"><%= link_to "グループ詳細", subject_group_path(@subject_group.id) %></li>
+                    <li class="breadcrumb-item active">[集計]グループメンバー学習実績</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">週間学習実績</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+
+                        <div class="row fc">
+                            <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
+                                <div class="fc-toolbar-chunk">
+                                    <div class="btn-group">
+                                        <%= link_to group_aggregates_path(id: @subject_group.id, 
+                                                                    date: @select_basedate, 
+                                                                    byday_flag: @select_byday_flag, 
+                                                                    change_byday_flag: false, 
+                                                                    change_date_flag: true, 
+                                                                    direction: "before"
+                                                                    ), local: true, 'data-disable-with' => false  do %>
+                                            <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
+                                                <span class="fa fa-chevron-left">
+                                                </span>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <% if @select_byday_flag == "true" then %>
+                                                    昨日
+                                                <% else %>
+                                                    先週
+                                                <% end %>
+                                                &nbsp;
+                                            </button>
+                                        <% end %>
+                                    </div>
+                                    
+                                    <div class="btn-group">
+                                        <%= link_to group_aggregates_path(id: @subject_group.id, 
+                                                                    date: @select_basedate, 
+                                                                    byday_flag: @select_byday_flag, 
+                                                                    change_byday_flag: false, 
+                                                                    change_date_flag: true, 
+                                                                    direction: "after"
+                                                                    ), local: true, 'data-disable-with' => false  do %>
+                                            <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
+                                                &nbsp;
+                                                <% if @select_byday_flag == "true" then %>
+                                                    翌日
+                                                <% else %>
+                                                    翌週
+                                                <% end %>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <span class="fa fa-chevron-right">
+                                                </span>
+                                            </button>
+                                        <% end %>
+                                    </div>
+                                </div>
+                                <div class="fc-toolbar-chunk">&nbsp;</div>
+                                <div class="fc-toolbar-chunk">
+                                    <!-- <div class="ml-auto"> -->
+                                    <ul class="nav nav-pills">
+                                        <% if @select_byday_flag == "true" then %>
+                                            <li class="nav-item">
+                                            <%= link_to '日別', group_aggregates_path(id: @subject_group.id, 
+                                                                            date: @select_basedate, 
+                                                                            byday_flag: true, 
+                                                                            change_byday_flag: false, 
+                                                                            change_date_flag: false, 
+                                                                            direction: ""
+                                                                            ), 
+                                                                            :class => 'nav-link active', 
+                                                                            local: true %></li>
+                                            <li class="nav-item">
+                                            <%= link_to '週別', group_aggregates_path(id: @subject_group.id, 
+                                                                            date: @select_basedate, 
+                                                                            byday_flag: false, 
+                                                                            change_byday_flag: true, 
+                                                                            change_date_flag: true, 
+                                                                            direction: ""
+                                                                            ), 
+                                                                            :class => 'nav-link', 
+                                                                            local: true %></li>
+                                        <% else %>
+                                            <li class="nav-item">
+                                            <%= link_to '日別', group_aggregates_path(id: @subject_group.id, 
+                                                                            date: @select_basedate, 
+                                                                            byday_flag: true, 
+                                                                            change_byday_flag: true, 
+                                                                            change_date_flag: true, 
+                                                                            direction: ""
+                                                                            ), 
+                                                                            :class => 'nav-link', 
+                                                                            local: true %></li>
+                                            <li class="nav-item">
+                                            <%= link_to '週別', group_aggregates_path(id: @subject_group.id, 
+                                                                            date: @select_basedate, 
+                                                                            byday_flag: false, 
+                                                                            change_byday_flag: false, 
+                                                                            change_date_flag: false, 
+                                                                            direction: ""
+                                                                            ), 
+                                                                            :class => 'nav-link active', 
+                                                                            local: true %></li>
+                                        <% end %>
+                                    </ul>
+                                <!--</div> -->
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <canvas id="groupChart" style="min-height: 300px; height: 500px; max-height: 2000px; width: 100%;"></canvas>
+                        </div>
+                        <!-- ./col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+
+
+
+<script>
+    function formatTime_jp(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + "時間" + formatTimeNotation(divisor_for_minutes) + "分";
+    }
+
+    function formatTime(secs){
+        var hours = Math.floor(secs / (60));
+
+        var divisor_for_minutes = Math.ceil(secs % (60));
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        return formatTimeNotation(hours) + ":" + formatTimeNotation(divisor_for_minutes);
+    }
+
+    function formatTimeNotation(int){
+        if (int < 10) {
+            result = '0' + int.toString();
+        } else {
+            result = int;
+        }
+        return result;
+    }
+
+    var ctx = document.getElementById('groupChart');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: <%== @users_labels %>,
+            datasets: [{
+                label: '# 合計時間',
+                data: <%== @done_sum_studyhours %>,
+                <% if @select_done_flag == true then %>
+                    backgroundColor: 'rgba(219,39,91,0.5)',
+                    borderColor: 'rgba(219,39,91,1)',
+                <% else %>
+                    backgroundColor: 'rgba(40,124,250,0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                <% end %>
+                borderWidth: 1
+            }]
+        },
+        options: {
+            tooltips:{
+                callbacks: 
+                {
+                    label: function(tooltipItems, data) {
+                        if(tooltipItems.yLabel == "0"){
+                            return "";
+                        }
+                        return data.datasets[tooltipItems.datasetIndex].label + "：" + formatTime_jp(tooltipItems.xLabel);
+                    }
+                }
+            },
+            legend: {
+                display: false  // 凡例削除
+            },
+            title: {
+                display: true,
+                fontSize: 20,
+                text: '<%== @xlabel %>'
+            },
+            scales: {
+                yAxes: [{
+                    scaleLabel: {                 // 軸ラベル
+                        display: true,                // 表示設定
+                        labelString: '【メンバー】',    // ラベル
+                        fontSize: 16                  // フォントサイズ
+                    },
+                    gridLines: {
+                        display: true    // 目盛を非表示
+                    }
+                }],
+                xAxes: [{
+                    scaleLabel: {                 // 軸ラベル
+                        display: true,                // 表示設定
+                        labelString: '【学習時間】',    // ラベル
+                        fontSize: 16                  // フォントサイズ
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 60,
+                        callback: function(label, index, labels) {
+                            return formatTime(label);
+                        }
+                    }
+                }]
+            }
+        }
+    });
+</script>

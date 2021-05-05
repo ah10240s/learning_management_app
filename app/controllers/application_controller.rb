@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
 
     # メールアドレスでもログイン出来るようにする。
     def configure_permitted_parameters
-        added_attrs = [ :email, :username, :password, :password_confirmation ]
+        added_attrs = [ :email, :username, :password, :password_confirmation, :invite_user_id ]
         devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
         devise_parameter_sanitizer.permit :account_update, keys: added_attrs
         devise_parameter_sanitizer.permit :sign_in, keys: added_attrs

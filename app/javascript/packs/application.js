@@ -11,7 +11,7 @@ require("channels")
 require('admin-lte');
 require("jquery");
 
-// import 'bootstrap';
+//import 'bootstrap';
 import '../stylesheets/application';
 import "@fortawesome/fontawesome-free/js/all";
 

@@ -24,9 +24,9 @@ class MembershipSubjectGroup < ApplicationRecord
   end
 
   # #####################################
-  # 参加科目グループが保留中か判定
+  # 参加科目グループが保留中（招待中）か判定
   # #####################################
-  def membership_subject_group_onhold
+  def membership_subject_group_invit
     if self.joined_at == nil then
       return true
     else

@@ -1,24 +1,21 @@
-<% provide(:title, "グループ一覧") %>
-<!-- 
+<%
+=begin%>
+ <% provide(:title, "参加グループ一覧") %>
+
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
--->
+
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>グループ一覧</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
-                    <li class="breadcrumb-item active">グループ一覧</li>
-                </ol>
+            <h1>参加グループ一覧</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
+
 <!-- テーブル -->
 <section class="content">
     <div class="container-fluid">
@@ -26,18 +23,18 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">参加中グループ一覧</h3>
+                        <h3 class="card-title">参加グループ一覧</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered table-hover normal_datatable">
+                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>参加グループ名</th>
                                 <th>科目</th>
                                 <th>参加人数</th>
                                 <th>参加ステータス</th>
-                                <th>詳細</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         
@@ -56,11 +53,8 @@
                                     <% end %>
                                 </td>
                                 <td>
-                                    <% if subject_group.subject_groups_create_judge(@user) then %>
-                                        <%= link_to '詳細', subject_group_path(subject_group.id), class:"btn btn-outline-primary btn-sm" %>
-                                    <% else %>
-                                        <%= link_to '詳細', subject_group_path(subject_group.id), class:"btn btn-outline-primary btn-sm" %>
-                                    <% end %>
+                                    <%= link_to '科目名編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                    <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %>
                                 </td>
                                 </tr>
                             <% end %>
@@ -78,7 +72,6 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
-
 
 
 <!-- テーブル -->
@@ -86,31 +79,32 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card card-warning">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">招待を受けているグループ一覧</h3>
+                        <h3 class="card-title">招待中グループ一覧</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered table-hover normal_datatable">
+                        <table id="two_perpage_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>グループ名</th>
                                 <th>科目</th>
                                 <th>参加人数</th>
-                                <th>詳細</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                         
                             <tbody>
                             <% @subject_groups.each do |subject_group| %>
-                            <% subject = subject_group.subject_groups_createuser_subject(@user) %>
+                            <% subject = Subject.find(subject_group.subject_id) %>
                                 <tr>
                                 <td><%= subject_group.name %></td>
                                 <td><%= subject.subject_name %></td>
                                 <td><%= subject_group.subject_groups_joining_users.count %></td>
                                 <td>
-                                    <%= link_to '詳細', subject_group_path(subject_group.id), class:"btn btn-outline-primary btn-sm" %>
+                                    <%= link_to '科目名編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
+                                    <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %>
                                 </td>
                                 </tr>
                             <% end %>
@@ -127,4 +121,6 @@
     </div>
     <!-- /.container-fluid -->
 </section>
-<!-- /.content -->
+<!-- /.content --> 
+<%
+=end%>
