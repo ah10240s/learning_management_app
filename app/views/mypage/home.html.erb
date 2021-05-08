@@ -39,7 +39,7 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-head-fixed dashboard_datatable">
+                        <table id="dashboard_studyplan_datatable" class="table table-bordered table-hover table-head-fixed" width="100%">
                             <thead>
                             <tr>
                                 
@@ -57,7 +57,7 @@
                                 <% @studyplan = studyplan %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
                                 <td>
                                     <% if studyplan.done_flag %>
                                         完了
@@ -96,7 +96,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover table-head-fixed dashboard_datatable">
+                            <table id="dashboard_subject_datatable" class="table table-bordered table-hover table-head-fixed">
                                 <thead>
                                 <tr>
                                     <th>科目名</th>
@@ -196,6 +196,8 @@
 
 
 <script>
+
+
     function formatTime_jp(secs){
         var hours = Math.floor(secs / (60));
 

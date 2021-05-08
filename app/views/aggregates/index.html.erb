@@ -58,7 +58,7 @@
                                 <div class="fc-toolbar-chunk">
                                     <!-- <div class="ml-auto"> -->
                                     <ul class="nav nav-pills">
-                                        <% if @select_done_flag == "true" then %>
+                                        <% if @select_done_flag == true then %>
                                             <li class="nav-item">
                                             <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
                                                                             flag: true, 
@@ -260,7 +260,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
+                        <table id="normal_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 

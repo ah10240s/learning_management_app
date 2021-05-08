@@ -1,7 +1,7 @@
 
-//require('datatables.net');
+require('datatables.net');
 require('datatables.net-bs4');
-//require('datatables.net-responsive');
+require('datatables.net-responsive');
 require('datatables.net-responsive-bs4');
 
 require('datatables.net-buttons-bs4');
@@ -9,6 +9,7 @@ require('datatables.net-buttons-bs4');
 
 
 import '../../stylesheets/datatables/index.scss';
+//require('../../stylesheets/datatables/index.scss');
 
 var ja_DataTable = {
                 "sProcessing":   "処理中...",
@@ -28,9 +29,9 @@ var ja_DataTable = {
                 }
             };
 
-
+            
 $(function() {
-    $('.normal_datatable').DataTable({
+    $('#normal_datatable').DataTable({
         "paging": true,
         "lengthChange": true,
         "searching": true,
@@ -42,9 +43,41 @@ $(function() {
     });
 });
 
+$(function() {
+    $('#normal_datatable_second').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
 
 $(function() {
-    $('.dashboard_datatable').DataTable({
+
+    var table = $('#dashboard_studyplan_datatable').dataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+    table.state.clear();
+    table.destroy();
+    $("#dashboard_studyplan_datatable tbody").empty();
+    table.draw();
+    //table.draw();
+    //$('#dashboard_studyplan_datatable').DataTable().destroy();
+});
+
+$(function() {
+    $('#dashboard_subject_datatable').DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": false,
@@ -56,6 +89,21 @@ $(function() {
     });
 });
 
+
+/*
+$(function() {
+    $('#top_one_perpage_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+        "responsive": true,
+        "language": ja_DataTable,
+        "oSearch": {"sSearch": "<%= @oSearch_word %>"}
+    });
+});
 
 
 $(function() {
@@ -109,3 +157,4 @@ $(function() {
         "language": ja_DataTable
     });
 });
+*/

@@ -5,7 +5,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-            <h1>[集計]週間学習実績</h1>
+                <h1>[集計]週間学習実績</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><%= link_to "ホーム", root_url %></li>
+                    <li class="breadcrumb-item active">[集計]週間学習実績</li>
+                </ol>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -239,10 +245,10 @@
     });
 </script>
 
-
+<!-- 
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
-
+ -->
 <!-- テーブル -->
 <section class="content">
     <div class="container-fluid">
@@ -254,7 +260,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="one_perpage_datatable" class="table table-bordered table-hover">
+                        <table id="normal_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 
