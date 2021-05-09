@@ -1,9 +1,9 @@
 <% provide(:title, "学習予定一覧") %>
 
-<!-- 
+
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
--->
+
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
@@ -34,10 +34,11 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="normal_datatable" class="table table-bordered table-hover">
+                        <table id="studyplan_datatable" class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>科目名</th>
+                                <th>参加グループ名</th>
                                 <th>完了ボタン</th>
                                 <th>開始時間</th>
                                 <th>終了時間</th>
@@ -51,7 +52,8 @@
                                 
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>   
+                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td style="max-width:30px;"><%= join_subject_group_name(subject) %></td>
                                 <td id="studyplan_td_<%= studyplan.id %>">
                                     <% if studyplan.done_flag %>
                                         <%= form_with(url: incomplete_studyplan_path(studyplan.id), method: :delete, remote: true) do |f| %>
@@ -90,8 +92,41 @@
 <!-- /.content -->
 
 <script>
+
+var ja_DataTable = {
+                "sProcessing":   "処理中...",
+                "sLengthMenu":   "_MENU_ 件表示",
+                "sZeroRecords":  "データはありません。",
+                "sInfo":         " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                "sInfoEmpty":    " 0 件中 0 から 0 まで表示",
+                "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                "sInfoPostFix":  "",
+                "sSearch":       "検索:",
+                "sUrl":          "",
+                "oPaginate": {
+                    "sFirst":    "先頭",
+                    "sPrevious": "前",
+                    "sNext":     "次",
+                    "sLast":     "最終"
+                }
+            };
+            
     $(function() {
+    $('#studyplan_datatable').dataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+            "language": ja_DataTable,
+            "oSearch": {"sSearch": "<%= @oSearch_word %>"}
+        });
+    });
+
+    /*$(function() {
         $('.form-control-sm').eq(1).val(["<%= @oSearch_word %>"]);
         $('.form-control-sm').eq(1).focus();
-    });
+    });*/
 </script>

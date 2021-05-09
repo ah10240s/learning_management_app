@@ -2,10 +2,7 @@ class InvitationsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_current_user
 
-# アクセス制限
 # 退会日時の削除
-# グループの削除
-
 
     # # GET: /invitations
     # # 招待を受けている一覧ページへ
@@ -22,6 +19,10 @@ class InvitationsController < ApplicationController
     def new
         
         @subject_group = SubjectGroup.find(params[:subject_group_id])
+
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(@subject_group)
+
         @membership_subject_group = MembershipSubjectGroup.new
         @subject = Subject.new
         
@@ -30,6 +31,9 @@ class InvitationsController < ApplicationController
     # POST: /invitations
     # 招待作成処理
     def create
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(SubjectGroup.find(params[:subject_group_id]))
+
         signup_user = User.where(invite_user_id: params[:invite_user_id]).first
         
         # 入力したユーザーが存在するか確認
@@ -72,6 +76,10 @@ class InvitationsController < ApplicationController
     # 招待承認処理
     def update
         subject_group = SubjectGroup.find(params[:id])
+
+        # そのグループに招待されていないなら、トップページにリダイレクト
+        check_access_invite_subject_group(subject_group)
+
         user = User.find(params[:user_id])
         # 招待中の所属科目データ
         membership_subject_group = subject_group.belongto_invite_membership_subject_groups(user)
@@ -87,41 +95,32 @@ class InvitationsController < ApplicationController
     end
 
     # DELETE: /invitations/:id
-    # 招待削除（取り消し、拒否）処理
+    # 招待削除（取り消し、拒否）、グループ脱退処理
     def destroy
         subject_group = SubjectGroup.find(params[:id])
+
+        # そのグループに所属、もしくは招待されていないなら、トップページにリダイレクト
+        check_access_join_invite_subject_group(subject_group)
+
         user = User.find(params[:user_id])
         subject = subject_group.subject_groups_createuser_subject(user)
-        membership_subject_group = subject_group.belongto_invite_membership_subject_groups(user)
 
-        membership_subject_group.destroy
-        subject.destroy
-        flash[:success] = "招待を拒否・キャンセルしました。"
+debugger
+        if user.check_access_invite_subject_group(subject_group) then
+            membership_subject_group = subject_group.belongto_invite_membership_subject_groups(user)
+            membership_subject_group.destroy
+            subject.destroy
+            flash[:success] = "招待を拒否・キャンセルしました。"
+        else
+            membership_subject_group = subject_group.belongto_join_membership_subject_groups(user)
+            membership_subject_group.destroy
+            flash[:success] = "グループを脱退しました。"
+        end
+
 
         redirect_to subject_groups_path
     end
 
-
-
-
-
-
-    # # POST: /invitations/invite_create
-    # # 招待承認処理
-    # def invite_create
-    #     subject_group = SubjectGroup.find(params[:id])
-    #     # 招待中の所属科目データ
-    #     membership_subject_group = subject_group.belongto_invite_membership_subject_groups(@user)
-
-    #     if membership_subject_group.update(joined_at: (Time.now + 9.hours))
-    #         flash[:success] = "グループに参加しました。" #（success、info、warning、danger）
-    #         redirect_to subject_groups_path
-    #     else
-    #         # flash[:danger] = "科目内容を変更出来ませんでした。"
-    #         render 'edit'
-    #     end
-
-    # end
 
 
     # GET: /invitations/user_edit

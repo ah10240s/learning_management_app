@@ -3,19 +3,13 @@ class GroupAggregatesController < ApplicationController
     before_action :set_current_user
 
 
-# 週別か、日別か
-# ユーザーごとの合計勉強時間（週別 or 日別）
-
-
     # GET: /aggregates
     # 学習実績ページへ
     def index
+        @subject_group = SubjectGroup.find(params[:id])
 
-        # @date
-        # @byday_flag
-        # change_byday_flag
-        # change_date_flag
-        # direction
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(@subject_group)
 
         if params[:byday_flag] then
             @select_byday_flag = params[:byday_flag]
@@ -51,7 +45,7 @@ class GroupAggregatesController < ApplicationController
             end
         end
 
-        @subject_group = SubjectGroup.find(params[:id])
+        
 
         # グループに参加している全ユーザー
         users = @subject_group.subject_groups_joining_users
@@ -100,6 +94,23 @@ class GroupAggregatesController < ApplicationController
             Studyplan.format_change_datetime_md(@select_basedate + 5.days) + " )"
         end
 
+        # @done_sum_studyhours << 1900
+        # @users_labels << "ssss"
+        @chart_size = group_aggregates_chart_size(@done_sum_studyhours)
+        
     end
+
+
+    private
+
+        def group_aggregates_chart_size(arr)
+            basis_size = (arr.size * 60) + 50
+            if arr.size == 0 then
+                return "min-height: 200px; height: 200px; max-height: 200px; width: 100%;"
+            else
+                return "min-height: #{(basis_size / 3).to_s}px; height: #{basis_size.to_s}px; max-height: #{(basis_size * 3).to_s}px; width: 100%;"
+                # return "min-height: #{(basis_size / 2).to_s}px; height: #{basis_size.to_s}px; max-height: #{(basis_size * 2).to_s}px; width: 100%;"
+            end
+        end
 
 end

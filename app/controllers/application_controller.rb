@@ -128,4 +128,25 @@ class ApplicationController < ActionController::Base
         @user = current_user
     end
 
+    # そのグループに所属していないなら、トップページにリダイレクト
+    def check_access_join_subject_group(group)
+        if @user.check_access_join_subject_group(group) == false then
+            redirect_to root_url
+        end
+    end
+    
+    # そのグループに所属、もしくは招待されていないなら、トップページにリダイレクト（招待の承認・削除の権限確認）
+    def check_access_join_invite_subject_group(group)
+        if @user.check_access_notjoin_subject_group(group) then
+            redirect_to root_url
+        end
+    end
+
+    # そのグループに招待されていないなら、トップページにリダイレクト
+    def check_access_invite_subject_group(group)
+        if @user.check_access_invite_subject_group(group) == false then
+            redirect_to root_url
+        end
+    end
+
 end

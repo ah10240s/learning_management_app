@@ -29,7 +29,41 @@ var ja_DataTable = {
                 }
             };
 
-            
+
+
+
+$(function() {
+    $('.dashboard_datatable').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
+
+
+
+
+$(function() {
+    $('.normal_datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "language": ja_DataTable
+    });
+});
+
+
+
+/*
 $(function() {
     $('#normal_datatable').DataTable({
         "paging": true,
@@ -89,72 +123,4 @@ $(function() {
     });
 });
 
-
-/*
-$(function() {
-    $('#top_one_perpage_datatable').DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": true,
-        "responsive": true,
-        "language": ja_DataTable,
-        "oSearch": {"sSearch": "<%= @oSearch_word %>"}
-    });
-});
-
-
-$(function() {
-    $('#one_perpage_datatable').DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "language": ja_DataTable
-    });
-});
-
-$(function() {
-    $('#dashboard_studyplan').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "language": ja_DataTable
-    });
-});
-
-$(function() {
-    $('#dashboard_subject').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "language": ja_DataTable
-    });
-});
-
-$(function() {
-    $('#two_perpage_datatable').DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-        "language": ja_DataTable
-    });
-});
 */

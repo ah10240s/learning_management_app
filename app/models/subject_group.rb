@@ -2,6 +2,9 @@ class SubjectGroup < ApplicationRecord
   belongs_to :user
   has_many :membership_subject_groups, dependent: :destroy
 
+  validates :name,
+            length: { minimum: 1, maximum: 30 },
+            presence: true
 
   # #####################################
   # この科目グループに所属している、招待中の全ユーザーの科目を返却
@@ -22,6 +25,23 @@ end
 
 
 
+  # #####################################
+  # この科目グループに所属している、参加中の自分の所属科目グループを返却
+  # #####################################
+  def belongto_join_membership_subject_groups(user)
+    membership_subject_groups = self.membership_subject_groups
+    subjects = user.subjects
+
+    membership_subject_groups.each do |buf|
+      if buf.membership_subject_group_valid then
+        if subjects.exists?(buf.subject_id) then
+          return buf
+        end
+      end
+    end
+
+    return nil
+  end
 
   # #####################################
   # この科目グループに所属している、招待中の自分の所属科目グループを返却

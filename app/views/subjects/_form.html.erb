@@ -1,19 +1,40 @@
 <section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-8 offset-md-2">
+                
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><%= title %></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <%= form_with(model: @subject, local: true) do |f| %>
+                        <%= render 'shared/error_messages', object: f.object %>
 
-    <%= form_with(model: @subject, local: true) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
+                        <%= f.hidden_field :user_id, :value => @user.id %>
 
-        <div class="card-body">
-            <div class="form-group col-sm-6">
-            <%= f.label :科目名 %><br />
-            <%= f.text_field :subject_name, autofocus: true, class:"form-control", value: @subject.subject_name %>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <%= f.label :科目名 %><br />
+                                <%= f.text_field :subject_name, autofocus: true, class:"form-control", value: @subject.subject_name %>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <%= f.submit "登録する", class:"btn btn-primary" %>
+                        </div>
+                    <% end %>
+                </div>
+                <!-- /.card -->
+            </div>
         </div>
+    </div>
 
-        <%= f.hidden_field :user_id, :value => @user.id %>
-
-        <div class="card-footer">
-        <%= f.submit "登録する", class:"btn btn-primary" %>
-        </div>
-
-    <% end %>
 </section>
+
+
+

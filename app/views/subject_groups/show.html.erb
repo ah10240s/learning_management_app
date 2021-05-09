@@ -99,10 +99,14 @@
                         
                         <% if @user.check_access_join_subject_group(@subject_group) then %>
                             <%= link_to 'メンバーの実績を集計する', group_aggregates_path(id: @subject_group.id), class:"btn btn-block btn-outline-primary" %>
+
+
                             <% if @subject_group.subject_groups_create_judge(@user) then %>
                                 <%= link_to 'グループ名を編集する', edit_subject_group_path(@subject_group), class:"btn btn-block btn-outline-primary" %>
                                 <%= link_to 'メンバーを招待する', new_invitation_path(subject_group_id: @subject_group.id), class:"btn btn-block btn-outline-primary" %>
                                 <%= link_to 'グループを削除する', subject_group_path(@subject_group), method: :delete, class:"btn btn-block btn-outline-danger", data: { confirm: 'グループに削除します。本当によろしいですか？' } %>
+                            <% else %>
+                                <%= link_to 'グループから脱退する', invitation_path(id: @subject_group.id, user_id: @user.id), method: :delete, class:"btn btn-block btn-outline-danger", data: { confirm: 'グループから脱退します。本当によろしいですか？' } %>
                             <% end %>
                         <% end %>
 

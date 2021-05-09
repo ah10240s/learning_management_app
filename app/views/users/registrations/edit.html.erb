@@ -8,13 +8,28 @@
     </div>
   </div>
 </section>
+
+
+
 <section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-8 offset-md-2">
+                
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">登録情報編集</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
   
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= render "users/shared/error_messages", resource: resource %>
 
     <div class="card-body">
-      <div class="form-group col-sm-6">
+      <div class="form-group">
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control" %>
       
@@ -24,7 +39,7 @@
         <% end %>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group">
         <%= f.label :password %> <i>(変更したい場合)</i>
         <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
         <% if @minimum_password_length %>
@@ -33,12 +48,12 @@
         <% end %>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group">
         <%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control" %>
       </div>
 
-      <div class="form-group col-sm-6">
+      <div class="form-group">
         <%= f.label :current_password %> <i>(変更する場合は、現在のパスワードを入れて下さい)</i>
         <%= f.password_field :current_password, autocomplete: "current-password", class:"form-control" %>
       </div>
@@ -48,6 +63,14 @@
         <%= f.submit "変更する", class:"btn btn-primary" %>
       </div>
   <% end %>
+
+
+</div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
 </section>
 
 

@@ -26,6 +26,10 @@ class SubjectGroupsController < ApplicationController
     # グループ詳細ページへ
     def show
         @subject_group = SubjectGroup.find(params[:id])
+
+        # そのグループに所属、もしくは招待されていないなら、トップページにリダイレクト
+        check_access_join_invite_subject_group(@subject_group)
+
         @subject = @subject_group.subject_groups_createuser_subject(@user)
         @join_users = @subject_group.subject_groups_joining_notcreate_users
         @create_user = @subject_group.user
@@ -59,6 +63,8 @@ class SubjectGroupsController < ApplicationController
     # グループ編集ページへ
     def edit
         @subject_group = SubjectGroup.find(params[:id])
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(@subject_group)
     end
 
 
@@ -66,6 +72,8 @@ class SubjectGroupsController < ApplicationController
     # グループ名情報変更処理
     def update
         @subject_group = SubjectGroup.find(params[:id])
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(@subject_group)
         if @subject_group.update(subject_group_name_params)
             flash[:success] = "グループ名を変更しました。" #（success、info、warning、danger）
             redirect_to subject_group_path
@@ -76,13 +84,17 @@ class SubjectGroupsController < ApplicationController
     end
 
 
-    # DELETE: /studyplans/:id
-    # 科目削除処理
+    # DELETE: /subject_groups/:id
+    # グループ削除処理
     def destroy
         # 科目グループ削除
         # 所属データ削除
         # 招待中の場合は、科目も削除
+
         subject_group = SubjectGroup.find(params[:id])
+        # そのグループに所属していないなら、トップページにリダイレクト(アクセス制限)
+        check_access_join_subject_group(subject_group)
+
         subjects = subject_group.belongto_invite_alluser_subjects
 
         subject_group.destroy

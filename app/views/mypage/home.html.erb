@@ -1,8 +1,9 @@
 
-<!-- 
+
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
--->
+
+
 
 <% provide(:title, "ホーム") %>
 
@@ -26,7 +27,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card card-primary" style="max-height: 500px;">
                     <div class="card-header">
                         <!-- <div class="d-flex justify-content-between "> -->
@@ -39,7 +40,7 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table id="dashboard_studyplan_datatable" class="table table-bordered table-hover table-head-fixed" width="100%">
+                        <table class="table table-bordered table-hover table-head-fixed dashboard_datatable" width="100%">
                             <thead>
                             <tr>
                                 
@@ -83,34 +84,34 @@
                 <!-- /.card -->
             </div>
             <!-- /.col -->
-
-    <!-- /style="min-height: 300px; height: 500px; max-height: 700px; max-width: 100%;"> -->
             
-                <div class="col-md-4">
-                    <div class="card table-responsive p-0  card-primary" style="max-height: 500px;">
+                <div class="col-md-6">
+                    <div class="card table-responsive p-0  card-warning" style="max-height: 500px;">
                         <div class="card-header">
-                            <h5 class="card-title">科目一覧</h5>
-                            <div class="card-tools">
-                                <%= link_to "詳細", subjects_path, method: :get, class: "btn-tool" %>
-                            </div>
+                            <h3 class="card-title">招待を受けているグループ</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="dashboard_subject_datatable" class="table table-bordered table-hover table-head-fixed">
+                            <table class="table table-bordered table-hover dashboard_datatable">
                                 <thead>
                                 <tr>
-                                    <th>科目名</th>
-                                    <th>操作</th>
+                                    <th>グループ名</th>
+                                    <th>科目</th>
+                                    <th>参加人数</th>
+                                    <th>詳細</th>
                                 </tr>
                                 </thead>
                             
                                 <tbody>
-                                <% @subjects.each do |subject| %>
+                                <% @subject_groups.each do |subject_group| %>
+                                <% subject = subject_group.subject_groups_createuser_subject(@user) %>
                                     <tr>
+                                    <td style="max-width:30px;"><%= subject_group.name %></td>
                                     <td><%= subject.subject_name %></td>
+                                    <td><%= subject_group.subject_groups_joining_users.count %></td>
                                     <td>
-                                    <%= link_to '編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
-                                    <%= link_to '削除', subject, method: :delete, class:"btn btn-outline-danger btn-sm", data: { confirm: '本当によろしいでしょうか？' } %></td>
+                                        <%= link_to '詳細', subject_group_path(subject_group.id), class:"btn btn-outline-primary btn-sm" %>
+                                    </td>
                                     </tr>
                                 <% end %>
                                 </tbody>
@@ -197,6 +198,7 @@
 
 <script>
 
+ 
 
     function formatTime_jp(secs){
         var hours = Math.floor(secs / (60));

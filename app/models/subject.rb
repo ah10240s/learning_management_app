@@ -5,7 +5,7 @@ class Subject < ApplicationRecord
 
   validates :user_id, presence: true
   validates :subject_name,
-            length: { minimum: 1, maximum: 60 },
+            length: { minimum: 1, maximum: 30 },
             presence: true
 
 

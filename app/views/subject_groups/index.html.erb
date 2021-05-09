@@ -1,8 +1,8 @@
 <% provide(:title, "グループ一覧") %>
-<!-- 
+
 <%= javascript_pack_tag 'datatables/index' %>
 <%= stylesheet_pack_tag 'datatables/index' %>
--->
+
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
@@ -30,7 +30,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="normal_datatable" class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover normal_datatable">
                             <thead>
                             <tr>
                                 <th>参加グループ名</th>
@@ -45,7 +45,7 @@
                             <% @subjecs.each do |subject| %>
                             <% subject_group = subject.joining_subject_group %>
                                 <tr>
-                                <td><%= subject_group.name %></td>
+                                <td style="max-width:30px;"><%= subject_group.name %></td>
                                 <td><%= subject.subject_name %></td>
                                 <td><%= subject_group.subject_groups_joining_users.count %></td>
                                 <td>
@@ -92,7 +92,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="normal_datatable_second" class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover normal_datatable">
                             <thead>
                             <tr>
                                 <th>グループ名</th>

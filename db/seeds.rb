@@ -143,8 +143,7 @@ basedate = (Time.now) + 9.hours
 MembershipSubjectGroup.create!(
     subject_id: 1,
     subject_group_id: 1,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 
 
@@ -152,56 +151,48 @@ MembershipSubjectGroup.create!(
 MembershipSubjectGroup.create!(
     subject_id: 2,
     subject_group_id: 2,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 12,
     subject_group_id: 2,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 
 # 招待を受けている
 MembershipSubjectGroup.create!(
     subject_id:3,
     subject_group_id: 3,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 13,
     subject_group_id: 3,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 
 # 招待している
 MembershipSubjectGroup.create!(
     subject_id:4,
     subject_group_id: 4,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 14,
     subject_group_id: 4,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 
 # 招待を受けている2
 MembershipSubjectGroup.create!(
     subject_id:5,
     subject_group_id: 5,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 25,
     subject_group_id: 5,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 
 
@@ -209,62 +200,52 @@ MembershipSubjectGroup.create!(
 MembershipSubjectGroup.create!(
     subject_id: 31,
     subject_group_id: 1,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 32,
     subject_group_id: 2,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 33,
     subject_group_id: 3,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 34,
     subject_group_id: 4,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 MembershipSubjectGroup.create!(
     subject_id: 35,
     subject_group_id: 5,
-    joined_at: basedate,
-    withdrawn_at: nil
+    joined_at: basedate
 )
 
 # 全グループに招待を受けている
 MembershipSubjectGroup.create!(
     subject_id: 41,
     subject_group_id: 1,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 42,
     subject_group_id: 2,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 43,
     subject_group_id: 3,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 44,
     subject_group_id: 4,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )
 MembershipSubjectGroup.create!(
     subject_id: 45,
     subject_group_id: 5,
-    joined_at: nil,
-    withdrawn_at: nil
+    joined_at: nil
 )

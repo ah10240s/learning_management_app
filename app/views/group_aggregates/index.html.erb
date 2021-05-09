@@ -29,8 +29,6 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-
-
                         <div class="row fc">
                             <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
                                 <div class="fc-toolbar-chunk">
@@ -134,7 +132,7 @@
 
 
                         <div class="row">
-                            <canvas id="groupChart" style="min-height: 300px; height: 500px; max-height: 2000px; width: 100%;"></canvas>
+                            <canvas id="groupChart" style="<%= @chart_size %>"></canvas>
                         </div>
                         <!-- ./col -->
                         </div>
@@ -217,7 +215,7 @@
             scales: {
                 yAxes: [{
                     scaleLabel: {                 // 軸ラベル
-                        display: true,                // 表示設定
+                        display: false,                // 表示設定
                         labelString: '【メンバー】',    // ラベル
                         fontSize: 16                  // フォントサイズ
                     },
@@ -227,7 +225,7 @@
                 }],
                 xAxes: [{
                     scaleLabel: {                 // 軸ラベル
-                        display: true,                // 表示設定
+                        display: false,                // 表示設定
                         labelString: '【学習時間】',    // ラベル
                         fontSize: 16                  // フォントサイズ
                     },

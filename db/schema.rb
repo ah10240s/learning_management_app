@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_02_083515) do
+ActiveRecord::Schema.define(version: 2021_05_09_115456) do
 
   create_table "membership_subject_groups", force: :cascade do |t|
     t.integer "subject_id", null: false
     t.integer "subject_group_id", null: false
     t.datetime "joined_at"
-    t.datetime "withdrawn_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["subject_group_id"], name: "index_membership_subject_groups_on_subject_group_id"

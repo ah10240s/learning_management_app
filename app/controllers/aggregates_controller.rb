@@ -45,6 +45,8 @@ class AggregatesController < ApplicationController
         end
 
 
+        @chart_size = aggregates_chart_size(@all_week_studyhours)
+        
     end
 
 
@@ -59,6 +61,26 @@ class AggregatesController < ApplicationController
         end
         
     end
+
+    private
+
+        def aggregates_chart_size(arr)
+            
+            if arr.size == 0 then
+                return "min-height: 200px; height: 200px; max-height: 200px; width: 100%;"
+            else
+                basis_size = 500
+                arr.each do |buf|
+                    buf_size = (buf / 60 * 40) + 50
+                    if buf_size > 500 && buf_size > basis_size then
+                        basis_size = buf_size
+                    end
+                end
+
+                return "min-height: #{(basis_size / 3).to_s}px; height: #{basis_size.to_s}px; max-height: #{(basis_size * 3).to_s}px; width: 100%;"
+                # return "min-height: #{(basis_size / 2).to_s}px; height: #{basis_size.to_s}px; max-height: #{(basis_size * 2).to_s}px; width: 100%;"
+            end
+        end
 
 
 

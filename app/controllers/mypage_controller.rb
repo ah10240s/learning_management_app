@@ -20,15 +20,6 @@ class MypageController < ApplicationController
         @done_week_studyhours = multipledays_studyhours_min(done_studyplans_week, @select_basedate, 7)
         notyet_week_studyhours = multipledays_studyhours_min(notyet_studyplans_week, @select_basedate, 7)
 
-        # @all_week_studyhours =[
-        #             (@done_week_studyhours[0] + notyet_week_studyhours[0]),
-        #             (@done_week_studyhours[1] + notyet_week_studyhours[1]),
-        #             (@done_week_studyhours[2] + notyet_week_studyhours[2]),
-        #             (@done_week_studyhours[3] + notyet_week_studyhours[3]),
-        #             (@done_week_studyhours[4] + notyet_week_studyhours[4]),
-        #             (@done_week_studyhours[5] + notyet_week_studyhours[5]),
-        #             (@done_week_studyhours[6] + notyet_week_studyhours[6])
-        # ]
         @all_week_studyhours = multipledays_studyhours_min(all_studyplans_week, @select_basedate, 7)
 
 
@@ -42,6 +33,9 @@ class MypageController < ApplicationController
         else
             @achievement_rate = 0.0
         end
+
+        # 招待を受けている科目グループ一覧
+        @subject_groups = @user.inviting_subject_groups
 
     end
     
