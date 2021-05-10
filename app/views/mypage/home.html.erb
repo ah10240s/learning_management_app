@@ -40,7 +40,7 @@
                     <!-- /.card-header -->
 
                     <div class="card-body">
-                        <table class="table table-bordered table-hover table-head-fixed dashboard_datatable" width="100%">
+                        <table class="table table-bordered table-hover table-head-fixed normal_datatable" width="100%">
                             <thead>
                             <tr>
                                 
@@ -92,7 +92,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered table-hover dashboard_datatable">
+                            <table class="table table-bordered table-hover table-head-fixed normal_datatable">
                                 <thead>
                                 <tr>
                                     <th>グループ名</th>
@@ -124,6 +124,49 @@
                 <!-- /.col -->
         </div>
         <!-- /.row -->
+
+
+<script>
+
+    var ja_DataTable = {
+                    "sProcessing":   "処理中...",
+                    "sLengthMenu":   "_MENU_ 件表示",
+                    "sZeroRecords":  "データはありません。",
+                    "sInfo":         " _TOTAL_ 件中 _START_ から _END_ まで表示",
+                    "sInfoEmpty":    " 0 件中 0 から 0 まで表示",
+                    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+                    "sInfoPostFix":  "",
+                    "sSearch":       "検索:",
+                    "sUrl":          "",
+                    "oPaginate": {
+                        "sFirst":    "先頭",
+                        "sPrevious": "前",
+                        "sNext":     "次",
+                        "sLast":     "最終"
+                    }
+        };
+            
+
+    var dataTable = $('.normal_datatable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+                "language": ja_DataTable,
+                "oSearch": {"sSearch": "<%= @oSearch_word %>"}
+        });
+
+    document.addEventListener("turbolinks:before-cache", function() {
+        if (dataTable !== null) {
+            dataTable.destroy();
+            dataTable = null;
+        } 
+    });
+
+</script>
 
         
 

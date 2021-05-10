@@ -9,8 +9,8 @@ require('datatables.net-buttons-bs4');
 
 
 import '../../stylesheets/datatables/index.scss';
-//require('../../stylesheets/datatables/index.scss');
 
+/*
 var ja_DataTable = {
                 "sProcessing":   "処理中...",
                 "sLengthMenu":   "_MENU_ 件表示",
@@ -63,7 +63,7 @@ $(function() {
 
 
 
-/*
+
 $(function() {
     $('#normal_datatable').DataTable({
         "paging": true,
