@@ -15,10 +15,12 @@ class GroupAggregatesController < ApplicationController
             @select_byday_flag = params[:byday_flag]
             @select_basedate = Time.parse(params[:date])
             select_direction = params[:direction]
+            @select_total_flag = params[:total_flag]
         else
             @select_byday_flag = "true"
             @select_basedate = Time.now
             select_direction = ""
+            @select_total_flag = "false"
         end
 
         if params[:change_date_flag] then
@@ -29,18 +31,22 @@ class GroupAggregatesController < ApplicationController
                     @select_basedate = (Time.now) - 3.days
                 end
             else
-                if select_direction == "before" then
-                    if @select_byday_flag == "true" then
-                        @select_basedate = @select_basedate - 1.days
+                if @select_total_flag == "false" then
+                    if select_direction == "before" then
+                        if @select_byday_flag == "true" then
+                            @select_basedate = @select_basedate - 1.days
+                        else
+                            @select_basedate = @select_basedate - 7.days
+                        end
                     else
-                        @select_basedate = @select_basedate - 7.days
+                        if @select_byday_flag == "true" then
+                            @select_basedate = @select_basedate + 1.days
+                        else
+                            @select_basedate = @select_basedate + 7.days
+                        end
                     end
                 else
-                    if @select_byday_flag == "true" then
-                        @select_basedate = @select_basedate + 1.days
-                    else
-                        @select_basedate = @select_basedate + 7.days
-                    end
+                    @select_basedate = Time.now
                 end
             end
         end
@@ -71,18 +77,32 @@ class GroupAggregatesController < ApplicationController
                 @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_byday) / 60).to_i
 
             else
-                # 1週間の合計学習実績時間
-                    # 1週間の学習予定（完了済）
-                    all_studyplans_week = user.week_studyplans(@select_basedate, false, true)
-                    all_group_studyplans_week = []
-                    all_studyplans_week.each do |studyplan|
-                        if studyplan.subject_id == subject.id
-                            all_group_studyplans_week << studyplan
+                if @select_total_flag == "false" then
+                    # 1週間の合計学習実績時間
+                        # 1週間の学習予定（完了済）
+                        all_studyplans_week = user.week_studyplans(@select_basedate, false, true)
+                        all_group_studyplans_week = []
+                        all_studyplans_week.each do |studyplan|
+                            if studyplan.subject_id == subject.id
+                                all_group_studyplans_week << studyplan
+                            end
                         end
-                    end
-                    # 完了済の学習実績（秒）
-                    @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_week) / 60).to_i
+                        # 完了済の学習実績（秒）
+                        @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_week) / 60).to_i
+                else
+                    # 累計の合計学習実績時間
+                        # 累計の学習予定（完了済）
+                        all_studyplans_total = extract_studyplans_done_notyet(user.studyplans, true)
+                        all_group_studyplans_total = []
+                        all_studyplans_total.each do |studyplan|
+                            if studyplan.subject_id == subject.id
+                                all_group_studyplans_total << studyplan
+                            end
+                        end
+                        # 完了済の学習実績（秒）
+                        @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_total) / 60).to_i
                 end
+            end
             # ラベル（ユーザー名）
             @users_labels << user.username
         end
@@ -90,8 +110,12 @@ class GroupAggregatesController < ApplicationController
         if @select_byday_flag == "true" then
             @xlabel = "単日学習実績（ " + Studyplan.format_change_datetime_md(@select_basedate - 9.hours) + " )"
         else
-            @xlabel = "週間学習実績（ " + Studyplan.format_change_datetime_md(@select_basedate - 9.hours) + " 〜 " +
-            Studyplan.format_change_datetime_md(@select_basedate + 5.days) + " )"
+            if @select_total_flag == "false" then
+                @xlabel = "週間学習実績（ " + Studyplan.format_change_datetime_md(@select_basedate - 9.hours) + " 〜 " +
+                Studyplan.format_change_datetime_md(@select_basedate + 5.days) + " )"
+            else
+                @xlabel ="累計学習実績"
+            end
         end
 
         # @done_sum_studyhours << 1900

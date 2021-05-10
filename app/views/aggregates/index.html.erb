@@ -1,11 +1,11 @@
-<% provide(:title, "[集計]週間学習実績") %>
+<% provide(:title, "週間学習実績 [勉強スケジュール管理]") %>
 
 <!-- 上部 -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>[集計]週間学習実績</h1>
+                <h1>週間学習実績</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -16,9 +16,6 @@
         </div>
     </div><!-- /.container-fluid -->
 </section>
-
-
-
 
 
 <section class="content">
@@ -35,7 +32,10 @@
                             <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
                                 <div class="fc-toolbar-chunk">
                                     <div class="btn-group">
-                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "before", change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
+                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, 
+                                                                                flag: @select_done_flag, 
+                                                                                direction: "before", 
+                                                                                change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
                                             <button class="fc-prev-button btn btn-primary" type="button" aria-label="prev">
                                                 <span class="fa fa-chevron-left">
                                                 </span>
@@ -45,7 +45,10 @@
                                     </div>
                                     
                                     <div class="btn-group">
-                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, flag: @select_done_flag, direction: "after", change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
+                                        <%= link_to index_ajax_aggregates_path(date: @select_basedate, 
+                                                                                flag: @select_done_flag, 
+                                                                                direction: "after", 
+                                                                                change_date_flag: true), remote: true, 'data-disable-with' => false  do %>
                                             <button class="fc-next-button btn btn-primary" type="button" aria-label="next">
                                                 &nbsp;翌週&nbsp;&nbsp;&nbsp;
                                                 <span class="fa fa-chevron-right">
@@ -60,13 +63,8 @@
                                     <ul class="nav nav-pills">
                                         <% if @select_done_flag == true then %>
                                             <li class="nav-item">
-                                            <%= link_to '完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                            flag: true, 
-                                                                            direction: @select_direction, 
-                                                                            change_date_flag: false), 
-                                                                            :class => 'nav-link active', 
-                                                                            
-                                                                            remote: true %></li>
+                                                <span class="nav-link active">完了</span>
+                                            </li>
                                             <li class="nav-item">
                                             <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
                                                                             flag: false, 
@@ -85,13 +83,9 @@
                                                                             
                                                                             remote: true %></li>
                                             <li class="nav-item">
-                                            <%= link_to '未完了', index_ajax_aggregates_path(date: @select_basedate, 
-                                                                            flag: false, 
-                                                                            direction: @select_direction, 
-                                                                            change_date_flag: false), 
-                                                                            :class => 'nav-link active', 
-                                                                            
-                                                                            remote: true %></li>
+                                            <li class="nav-item">
+                                                <span class="nav-link active">未完了</span>
+                                            </li>
                                         <% end %>
                                     </ul>
                                 <!--</div> -->

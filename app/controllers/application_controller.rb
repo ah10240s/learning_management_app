@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
     before_action :configure_permitted_parameters, if: :devise_controller?
 
-
-
     # #####################################
     # 全学習予定から、「完了済」or「未完了」のデータを取り出す 
     # #######################
@@ -42,7 +40,8 @@ class ApplicationController < ActionController::Base
     # #####################################
     def multipledays_studyhours_min(studyplans, basedate, period_days)
         
-        if studyplans == nil || studyplans.count == 0 then
+        # if studyplans == nil || studyplans.count == 0 then
+        if studyplans == nil then
             return 0
         end
 

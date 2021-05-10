@@ -44,6 +44,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label>参加グループ</label><br />
+                                <span class="form-control" style="background-color: #e9ecef;"><%= join_subject_group_name(@subject) %></span>
+                            </div>
+
+                            <div class="form-group">
                                 <%= f.label :開始日時 %><br />
                                 <%= f.datetime_field :start_daytime, class:"form-control", value: @studyplan.start_daytime.strftime('%Y-%m-%dT%H:%M') %>
                             </div>

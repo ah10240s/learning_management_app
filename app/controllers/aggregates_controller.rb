@@ -5,7 +5,7 @@ class AggregatesController < ApplicationController
     # GET: /aggregates
     # 学習実績ページへ
     def index
-        # 
+        
         if params[:flag] then
             @select_done_flag = ActiveRecord::Type::Boolean.new.cast(params[:flag])
             @select_basedate = Time.parse(params[:date])
@@ -29,7 +29,7 @@ class AggregatesController < ApplicationController
 
         all_studyplans_week = @user.week_studyplans(@select_basedate)
         @studyplans_week = extract_studyplans_done_notyet(all_studyplans_week, @select_done_flag)
-
+        
         @datatables_ylabels = multipledays_format_change_datetime_md(@select_basedate, 7)
         @all_week_studyhours = multipledays_studyhours_min(@studyplans_week, @select_basedate, 7)
 
