@@ -33,11 +33,11 @@
                         <table class="table table-bordered table-hover normal_datatable">
                             <thead>
                             <tr>
-                                <th>参加グループ名</th>
-                                <th>科目</th>
-                                <th>参加人数</th>
-                                <th>参加ステータス</th>
-                                <th>詳細</th>
+                                <th style="background-color: #e8f0f8;">参加グループ名</th>
+                                <th style="background-color: #e8f0f8;">科目</th>
+                                <th style="background-color: #e8f0f8;">参加人数</th>
+                                <th style="background-color: #e8f0f8;">参加ステータス</th>
+                                <th style="background-color: #e8f0f8;">詳細</th>
                             </tr>
                             </thead>
                         
@@ -45,7 +45,7 @@
                             <% @subjecs.each do |subject| %>
                             <% subject_group = subject.joining_subject_group %>
                                 <tr>
-                                <td style="max-width:30px;"><%= subject_group.name %></td>
+                                <td><%= subject_group.name %></td>
                                 <td><%= subject.subject_name %></td>
                                 <td><%= subject_group.subject_groups_joining_users.count %></td>
                                 <td>
@@ -95,10 +95,10 @@
                         <table class="table table-bordered table-hover normal_datatable">
                             <thead>
                             <tr>
-                                <th>グループ名</th>
-                                <th>科目</th>
-                                <th>参加人数</th>
-                                <th>詳細</th>
+                                <th style="background-color: #e8f0f8;">グループ名</th>
+                                <th style="background-color: #e8f0f8;">科目</th>
+                                <th style="background-color: #e8f0f8;">参加人数</th>
+                                <th style="background-color: #e8f0f8;">詳細</th>
                             </tr>
                             </thead>
                         

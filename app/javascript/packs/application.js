@@ -14,6 +14,8 @@ require("jquery");
 import 'bootstrap';
 require('admin-lte');
 
+
+
 import "@fortawesome/fontawesome-free/js/all";
 import '../stylesheets/application';
 

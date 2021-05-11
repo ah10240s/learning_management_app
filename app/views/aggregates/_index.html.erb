@@ -272,8 +272,8 @@
                             <% @studyplans_week.each do |studyplan| %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
-                                <td style="max-width:30px;">
+                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td>
                                     <%= join_subject_group_name(subject) %>
                                 </td>
                                 <td>

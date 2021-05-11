@@ -86,4 +86,13 @@ class Studyplan < ApplicationRecord
         target.strftime("%Y/%m/%d(#{weeks[index - 1]})")
     end
 
+    # #####################################
+    # 開始日時・終了日時（Timeクラスの値）を「yyyy-mm-dd」に変換
+    # #####################################
+    def self.format_change_datetime_ymd_fullcalendar(target)
+        weeks = ["月","火","水","木","金","土","日"]
+        index = target.strftime("%u").to_i
+        target.strftime("%Y-%m-%d")
+    end
+
 end

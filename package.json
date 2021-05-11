@@ -2,6 +2,9 @@
   "name": "learning_management_app",
   "private": true,
   "dependencies": {
+    "@fullcalendar/core": "^5.6.0",
+    "@fullcalendar/daygrid": "^5.6.0",
+    "@fullcalendar/interaction": "^5.6.0",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
@@ -15,6 +18,7 @@
     "datatables.net-responsive-bs4": "2.2.7",
     "fullcalendar": "5.5.1",
     "jquery": "^3.6.0",
+    "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
   },

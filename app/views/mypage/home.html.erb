@@ -28,7 +28,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-primary" style="max-height: 500px;">
+                <div class="card card-primary overflow-auto" style="max-height: 600px;">
                     <div class="card-header">
                         <!-- <div class="d-flex justify-content-between "> -->
                         <h5 class="card-title">本日の学習予定</h5>
@@ -44,12 +44,12 @@
                             <thead>
                             <tr>
                                 
-                                <th>科目名</th>
-                                <th>学習状況</th>
-                                <th>開始時間</th>
-                                <th>終了時間</th>
-                                <th>勉強時間</th>
-                                <th>操作</th>
+                                <th style="background-color: #e8f0f8;">科目名</th>
+                                <th style="background-color: #e8f0f8;">学習状況</th>
+                                <th style="background-color: #e8f0f8;">開始時間</th>
+                                <th style="background-color: #e8f0f8;">終了時間</th>
+                                <th style="background-color: #e8f0f8;">勉強時間</th>
+                                <th style="background-color: #e8f0f8;">操作</th>
                             </tr>
                             </thead>
                         
@@ -86,7 +86,7 @@
             <!-- /.col -->
             
                 <div class="col-md-6">
-                    <div class="card table-responsive p-0  card-warning" style="max-height: 500px;">
+                    <div class="card table-responsive p-0  card-warning" style="max-height: 600px;">
                         <div class="card-header">
                             <h3 class="card-title">招待を受けているグループ</h3>
                         </div>
@@ -95,10 +95,10 @@
                             <table class="table table-bordered table-hover table-head-fixed normal_datatable">
                                 <thead>
                                 <tr>
-                                    <th>グループ名</th>
-                                    <th>科目</th>
-                                    <th>参加人数</th>
-                                    <th>詳細</th>
+                                    <th style="background-color: #e8f0f8;">グループ名</th>
+                                    <th style="background-color: #e8f0f8;">科目</th>
+                                    <th style="background-color: #e8f0f8;">参加人数</th>
+                                    <th style="background-color: #e8f0f8;">詳細</th>
                                 </tr>
                                 </thead>
                             
@@ -106,7 +106,7 @@
                                 <% @subject_groups.each do |subject_group| %>
                                 <% subject = subject_group.subject_groups_createuser_subject(@user) %>
                                     <tr>
-                                    <td style="max-width:30px;"><%= subject_group.name %></td>
+                                    <td><%= subject_group.name %></td>
                                     <td><%= subject.subject_name %></td>
                                     <td><%= subject_group.subject_groups_joining_users.count %></td>
                                     <td>
