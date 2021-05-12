@@ -1,7 +1,7 @@
 <!-- サイドバー -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- サイトロゴ -->
-    <%= link_to root_url, class:"brand-link" do %>
+    <%= link_to root_url, class:"brand-link","data-turbolinks": false do %>
         <span class="brand-text font-weight-light">勉強スケジュール管理</span>
     <% end %>
     <!-- Sidebar -->
@@ -13,7 +13,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <%= link_to root_url, class:"nav-link" do %>
+                    <%= link_to root_url, class:"nav-link","data-turbolinks": false do %>
                         <i class="nav-icon fa fa-user"></i>
                         <p>ダッシュボード</p>
                     <% end %>
