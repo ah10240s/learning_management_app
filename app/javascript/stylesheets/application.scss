@@ -20,3 +20,17 @@
     border-bottom: 1px solid #0256af; //330d9b
 }
 
+//p.topic_numerical_value { font-size: 18px; }
+
+@media screen and (max-width: 400px) { 
+    .topic_numerical_value { font-size: 16px; } 
+    .achievement_rate_symbol { font-size: 9px; } 
+}
+@media screen and (min-width: 401px) and (max-width: 500px) { 
+    .topic_numerical_value { font-size: 20px; } 
+    .achievement_rate_symbol { font-size: 11px; } 
+}
+@media screen and (min-width: 501px) { 
+    .topic_numerical_value { font-size: 24px; } 
+    .achievement_rate_symbol { font-size: 15px; } 
+}

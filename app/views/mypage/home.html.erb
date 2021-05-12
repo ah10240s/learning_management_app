@@ -191,7 +191,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @all_sum_studyhours_week %></strong></h4>
+                                        <div class="topic_numerical_value"><strong><%= @all_sum_studyhours_week %></strong></div>
                                         <p>予定時間</p>
                                     </div>
                                     <div class="icon">
@@ -204,7 +204,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @done_sum_studyhours_week %></strong></h4>
+                                        <div class="topic_numerical_value"><strong><%= @done_sum_studyhours_week %></strong></div>
                                         <p>実施時間</p>
                                     </div>
                                     <div class="icon">
@@ -217,7 +217,7 @@
                                 <!-- small card -->
                                 <div class="small-box ov-bg-info">
                                     <div class="inner">
-                                        <h4><strong><%= @achievement_rate %><sup style="font-size: 15px">%</sup></strong></h4>
+                                        <div class="topic_numerical_value"><strong><%= @achievement_rate %><sup class="achievement_rate_symbol">%</sup></strong></div>
                                         <p>達成割合</p>
                                     </div>
                                     <div class="icon">
@@ -240,8 +240,6 @@
 
 
 <script>
-
- 
 
     function formatTime_jp(secs){
         var hours = Math.floor(secs / (60));
