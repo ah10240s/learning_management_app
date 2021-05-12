@@ -28,7 +28,11 @@
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
-  
+
+  <div <% if content_for?(:body_attributes) %>
+    <%= yield(:body_attributes) %>
+  <% end %>>
+
   <div class="wrapper">
 
     <%= render 'shared/header' %>
@@ -39,11 +43,10 @@
         <% flash.each do |message_type, message| %>
           <div class="alert alert-<%= message_type %>"><%= message %></div>
         <% end %>
+
         <%= yield %>
       </div>
       <!-- /.content-wrapper -->
-
-
       <%= render 'shared/footer' %>
 
     <!-- ./wrapper -->
