@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   # def new
-  #   # debugger
+
   #   # if user_signed_in?
   #   #   redirect_to mypage_path(resource)
   #   # else

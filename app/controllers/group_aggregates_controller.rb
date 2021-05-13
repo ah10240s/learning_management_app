@@ -75,7 +75,7 @@ class GroupAggregatesController < ApplicationController
 
                 # 完了済の学習実績（秒）
                 @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_byday) / 60).to_i
-
+                
             else
                 if @select_total_flag == "false" then
                     # 1週間の合計学習実績時間
@@ -101,6 +101,7 @@ class GroupAggregatesController < ApplicationController
                         end
                         # 完了済の学習実績（秒）
                         @done_sum_studyhours << (sum_studyhours_int(all_group_studyplans_total) / 60).to_i
+                        
                 end
             end
             # ラベル（ユーザー名）

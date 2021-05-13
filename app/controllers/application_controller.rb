@@ -79,7 +79,6 @@ class ApplicationController < ActionController::Base
         else
             sum = 0
             studyplans.each do |buf|
-                # debugger
                 # sum = sum + ((buf.end_daytime - buf.start_daytime)/ 60.0).to_i
                 sum = sum + buf.daytime_difference()
             end

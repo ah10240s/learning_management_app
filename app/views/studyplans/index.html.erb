@@ -84,7 +84,7 @@
                                 
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td><%= subject.subject_name %><!-- -<%= studyplan.id %>-<%= studyplan.user_id %> --></td>
                                 <td><%= join_subject_group_name(subject) %></td>
                                 <td id="studyplan_td_<%= studyplan.id %>">
                                     <% if studyplan.done_flag %>

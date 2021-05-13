@@ -105,7 +105,7 @@ class InvitationsController < ApplicationController
         user = User.find(params[:user_id])
         subject = subject_group.subject_groups_createuser_subject(user)
 
-debugger
+
         if user.check_access_invite_subject_group(subject_group) then
             membership_subject_group = subject_group.belongto_invite_membership_subject_groups(user)
             membership_subject_group.destroy

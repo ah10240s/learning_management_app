@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>週間学習実績</h1>
+                <h1>[集計]週間学習実績</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -24,7 +24,7 @@
             <div class="col-md-10 offset-md-1">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">週間学習実績</h3>
+                        <h3 class="card-title">[集計]週間学習実績</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -272,7 +272,7 @@
                             <% @studyplans_week.each do |studyplan| %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td style="width:20%;"><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td style="width:20%;"><%= subject.subject_name %><!-- -<%= studyplan.id %>-<%= studyplan.user_id %> --></td>
                                 <td>
                                     <%= join_subject_group_name(subject) %>
                                 </td>

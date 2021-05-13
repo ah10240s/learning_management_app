@@ -52,7 +52,7 @@
                                 <% @studyplan = studyplan %>
                                 <% subject = Subject.find(studyplan.subject_id) %>
                                 <tr>
-                                <td><%= subject.subject_name %>-<%= studyplan.id %>-<%= studyplan.user_id %></td>
+                                <td><%= subject.subject_name %><!-- -<%= studyplan.id %>-<%= studyplan.user_id %> --></td>
                                 <td>
                                     <% if studyplan.done_flag %>
                                         完了

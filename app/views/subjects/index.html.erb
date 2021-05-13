@@ -44,7 +44,7 @@
                             <tbody>
                             <% @subjects.each do |subject| %>
                                 <tr>
-                                <td><%= subject.subject_name %>-<%= subject.id %>-<%= subject.user_id %></td>
+                                <td><%= subject.subject_name %><!--  -<%= subject.id %>-<%= subject.user_id %> --></td>
                                 <td><%= join_subject_group_name(subject) %></td>
                                 <td>
                                     <%= link_to '編集', edit_subject_path(subject.id), class:"btn btn-outline-primary btn-sm" %>
