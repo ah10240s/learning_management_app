@@ -99,10 +99,14 @@ basedate = (Time.now) - 10.days
     Studyplan.create!(
         user_id: 1, 
         subject_id: rand(1..15), 
-        start_daytime: (signup_basedate.change(hour: rand(0..12))) + 9.hours, 
-        end_daytime: (signup_basedate.change(hour: rand(13..23), min: rand(0..59))) + 9.hours, 
+        # start_daytime: (signup_basedate.change(hour: rand(9..12))) + 9.hours, 
+        # end_daytime: (signup_basedate.change(hour: rand(18..20), min: rand(0..59))) + 9.hours, 
+        start_daytime: (signup_basedate.change(hour: rand(9..12))), 
+        end_daytime: (signup_basedate.change(hour: rand(18..20), min: rand(0..59))), 
+        
         done_flag: done_flag
     )
+    
 end
 
 
