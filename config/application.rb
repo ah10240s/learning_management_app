@@ -30,5 +30,7 @@ module LearningManagementApp
     # field_with_errorsクラスの自動挿入の防止
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
 
+    config.time_zone = 'Tokyo'
+
   end
 end
