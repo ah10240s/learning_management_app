@@ -12,7 +12,7 @@ class AggregatesController < ApplicationController
             @select_direction = params[:direction]
         else
             @select_done_flag = true
-            @select_basedate = (Time.now) - 3.days
+            @select_basedate = (Time.current) - 3.days
             @select_direction = ""
         end
 

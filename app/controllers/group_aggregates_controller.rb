@@ -18,7 +18,7 @@ class GroupAggregatesController < ApplicationController
             @select_total_flag = params[:total_flag]
         else
             @select_byday_flag = "true"
-            @select_basedate = Time.now
+            @select_basedate = Time.current
             select_direction = ""
             @select_total_flag = "false"
         end
@@ -26,9 +26,9 @@ class GroupAggregatesController < ApplicationController
         if params[:change_date_flag] then
             if params[:change_byday_flag] == "true" then
                 if @select_byday_flag == "true" then
-                    @select_basedate = Time.now
+                    @select_basedate = Time.current
                 else
-                    @select_basedate = (Time.now) - 3.days
+                    @select_basedate = (Time.current) - 3.days
                 end
             else
                 if @select_total_flag == "false" then
@@ -46,7 +46,7 @@ class GroupAggregatesController < ApplicationController
                         end
                     end
                 else
-                    @select_basedate = Time.now
+                    @select_basedate = Time.current
                 end
             end
         end

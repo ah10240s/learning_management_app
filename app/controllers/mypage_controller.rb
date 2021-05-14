@@ -8,8 +8,8 @@ class MypageController < ApplicationController
             redirect_to new_user_session_path
         end
 
-        @select_basedate = (Time.now) - 3.days
-        @all_studyplans_byday = @user.byday_studyplans(Time.now)
+        @select_basedate = (Time.current) - 3.days
+        @all_studyplans_byday = @user.byday_studyplans(Time.current)
         @subjects = @user.notinvite_subjects
 
         all_studyplans_week = @user.week_studyplans(@select_basedate)

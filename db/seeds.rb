@@ -117,7 +117,7 @@ def set_done_flag
     end
 end
 
-basedate = (Time.now) - 10.days
+basedate = (Time.current) - 10.days
 
 20.times do |n|
 
@@ -236,7 +236,7 @@ end
 # 科目グループデータ
 # ##############################
 
-basedate = (Time.now) - 10.days
+basedate = (Time.current) - 10.days
 
 # グループ1
 # ユーザー1〜5

@@ -44,7 +44,7 @@ class SubjectGroupsController < ApplicationController
         @subjects = @user.notinvite_subjects
         if @subject_group.save
             @membership_subject_group = MembershipSubjectGroup.new(
-                subject_id: subject_group_memberships_params[:subject_id], subject_group_id: @subject_group.id, joined_at: DateTime.now)
+                subject_id: subject_group_memberships_params[:subject_id], subject_group_id: @subject_group.id, joined_at: Time.current)
             if @membership_subject_group.save
                 flash[:success] = "グループを作成しました。" #（success、info、warning、danger）
                 redirect_to subject_groups_path
