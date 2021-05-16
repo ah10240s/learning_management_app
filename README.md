@@ -3,7 +3,7 @@
 勉強スケジュール管理サービス
 
 # アプリケーション概要
-
+![Alt text](/javascript/images/sample_top.png)
 自分で登録した科目の学習予定を登録し、スケジュール管理、進捗管理を行うWEBサービスです。作成にあたりいくつか参考にした類似のサービスはありますが、DB設計や機能要件の定義等、基本的には自分で考え作成したオリジナルのWEBサービスです。
 
 # URL
@@ -16,7 +16,7 @@
 
 # 機能一覧&使用技術
 
-* プラットフォーム（Heroku、AWS ElasticBeanstalk）
+* プラットフォーム（Heroku）※AWSにもデプロイ予定
 * データベース（PostgreSQL）
 * cssフレームワーク (AdminLTE3、Bootstrap)
 * ユーザー登録、ログイン (devise)
