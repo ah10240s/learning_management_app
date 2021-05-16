@@ -3,7 +3,7 @@
 勉強スケジュール管理サービス
 
 # アプリケーション概要
-![Alt text](/javascript/images/sample_top.png)
+![Alt text](https://user-images.githubusercontent.com/77624225/118404567-692c2e80-b6ae-11eb-848c-e5eb98507c62.png)
 自分で登録した科目の学習予定を登録し、スケジュール管理、進捗管理を行うWEBサービスです。作成にあたりいくつか参考にした類似のサービスはありますが、DB設計や機能要件の定義等、基本的には自分で考え作成したオリジナルのWEBサービスです。
 
 # URL
