@@ -84,7 +84,7 @@ class InvitationsController < ApplicationController
         # 招待中の所属科目データ
         membership_subject_group = subject_group.belongto_invite_membership_subject_groups(user)
 
-        if membership_subject_group.update(joined_at: (Time.current + 9.hours))
+        if membership_subject_group.update(joined_at: Time.current)
             flash[:success] = "グループに参加しました。" #（success、info、warning、danger）
             redirect_to subject_groups_path
         else
