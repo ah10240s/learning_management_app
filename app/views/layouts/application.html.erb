@@ -45,6 +45,9 @@
         <% end %>
 
         <%= yield %>
+        <% content_for(:body_attributes) do %>
+    data-turbolinks="false"
+<% end %>
       </div>
       <!-- /.content-wrapper -->
       <%= render 'shared/footer' %>
