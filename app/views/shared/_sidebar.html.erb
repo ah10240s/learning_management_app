@@ -13,7 +13,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                 <li class="nav-item">
-                    <%= link_to root_url, class:"nav-link" do %>
+                    <%= link_to root_url, class:"nav-link", "data-turbolinks": false do %>
                         <i class="nav-icon fa fa-user"></i>
                         <p>ダッシュボード</p>
                     <% end %>
@@ -26,7 +26,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <%= link_to  subjects_path, method: :get, class: 'nav-link' do %>
+                            <%= link_to  subjects_path, method: :get, class: 'nav-link', "data-turbolinks": false do %>
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>科目一覧</p>
                             <% end %>
@@ -47,7 +47,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <%= link_to  studyplans_path, method: :get, class: 'nav-link' do %>
+                            <%= link_to  studyplans_path, method: :get, class: 'nav-link', "data-turbolinks": false do %>
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>学習予定一覧</p>
                             <% end %>
@@ -61,7 +61,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <%= link_to  aggregates_path, method: :get, class: 'nav-link' do %>
+                    <%= link_to  aggregates_path, method: :get, class: 'nav-link', "data-turbolinks": false do %>
                         <i class="nav-icon fa fa-trophy"></i>
                         <p>学習実績</p>
                     <% end %>
@@ -74,7 +74,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <%= link_to  subject_groups_path, method: :get, class: 'nav-link' do %>
+                            <%= link_to  subject_groups_path, method: :get, class: 'nav-link', "data-turbolinks": false do %>
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>一覧</p>
                             <% end %>
